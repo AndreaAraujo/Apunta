@@ -1,15 +1,30 @@
 <?php
-require_once(__DIR__."/../conexion/bdConexion.php");
+require_once(__DIR__."/../core/PDOConnection.php");
 
 
 class NotaMapper{
 
+  private $db;
+
+	public function __construct() {
+		$this->db = PDOConnection::getInstance();
+	}
+
   /*Buscamos todos las notas*/
-  public static function findAll()
+  public  function findAll()
   {
       global $connect;
-      $resultado = mysqli_query($connect, 'SELECT * FROM nota ORDER BY nombre');
-      return $resultado;
+      $stmt = $this->db->query( 'SELECT * FROM nota ORDER BY nombre');
+      $notas_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      $notas = array();
+
+      foreach ($notas_db as $nota) {
+
+        array_push($notas, new Nota($nota["IdNota"], $nota["nombre"], $nota["contenido"]));
+      }
+
+      return $notas;
   }
   /*Buscamos si existe una Nota por su Nombre, devolvemos true si existe*/
   public static function existeNota($nombre) {

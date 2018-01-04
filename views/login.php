@@ -22,13 +22,13 @@ if(!isset($_SESSION)) session_start();
     <script src="../js/bootstrap.min.js"></script>
 	</head>
 
-	<body>
+	<body><!
     <div class="container" id="login">
 
 			<center >
-
+<!--
         <form action="controller/defaultController.php?controlador=usuario&accion=login"   method="post" class ="formulario" role = "form">
-        <!--<form action="index.php?controlador=usuario&amp;accion=login"   method="post" class ="formulario" role = "form">-->
+        <form action="index.php?controlador=usuario&amp;accion=login"   method="post" class ="formulario" role = "form">
 					<label for = "logUsuario"><?= i18n("Nombre de usuario")?>:</label>
 					<input type="text" name="logUsuario"><br><br>
 					<label for = "conUsuario"><?= i18n("Contraseña")?>:</label>
@@ -36,7 +36,7 @@ if(!isset($_SESSION)) session_start();
           <a href="views/registro.php" id="reg"><?= i18n("¡Regístrate aquí!")?></a>
           <button type="submit" class="btn btn-default" id ="reg"><?= i18n("Iniciar sesión")?></button>
         </form>
-				</form>
+				</form>-->
       </center>
 
     </div>

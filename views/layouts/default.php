@@ -11,29 +11,29 @@ $currentuser = $view->getVariable("currentusername");
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/index.css" type="text/css">
 	<!-- enable ji18n() javascript function to translate inside your scripts -->
-	<script src="index.php?controller=language&amp;action=i18njs">
+	<script src="index.php?controller=language&amp;accion=i18njs">
 	</script>
 	<?= $view->getFragment("css") ?>
 	<?= $view->getFragment("javascript") ?>
 </head>
 <body>
 	<!-- header -->
-	<header>
-		<h1>Blog</h1>
-		<nav id="menu" style="background-color:grey">
-			<ul>
-				<li><a href="index.php?controller=nota&amp;action=index"><?= i18n("Notas") ?></a></li>
+	<header  id="main-header">
+		<?php if (isset($currentuser)): ?>
+			<id="logoCabecera"><img class="logo" src = "../img/icono.png"/>
 
-				<?php if (isset($currentuser)): ?>
-					<li><?= sprintf(i18n("Hello %s"), $currentuser) ?>
-						<a 	href="index.php?controller=usuario&amp;action=logout">(Logout)</a>
-					</li>
+		  <a href="index.php?controller=language&accion=change&lang=es" id = "salir"><?= i18n("Español") ?></a>
+		  <a href="index.php?controller=language&accion=change&lang=en" id = "salir"><?= i18n("Inglés") ?></a>
 
-				<?php else: ?>
-					<li><a href="index.php?controller=usuario&amp;action=login"><?= i18n("Login") ?></a></li>
-				<?php endif ?>
-			</ul>
-		</nav>
+		</div>
+		  <div class = "bloque">
+		    <br><br><br>
+		   <!-- <a id = "salir" href="misNotasCompartidas.php"><?= i18n("Notas compartidas")?></a>-->
+		    <a id = "salir" href="index.php?controller=usuario&accion=logout"><?= i18n("Salir")?></a>
+		  </div>
+
+		<?php endif ?>
+
 	</header>
 
 	<main>
