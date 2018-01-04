@@ -1,12 +1,28 @@
 <?php
 
-require_once(__DIR__."/../conexion/bdConexion.php");
+require_once(__DIR__."/../core/ViewManager.php");
+
+require_once(__DIR__."/../controller/BaseController.php");
 require_once(__DIR__."/../model/UsuarioMapper.php");
 require_once(__DIR__."/../model/Usuario.php");
-require_once(__DIR__."/../core/I18n.php");
+require_once(__DIR__."/../core/PDOConnection.php");
 
 
-class UsuarioController{
+class UsuarioController extends BaseController{
+
+  private $usuarioMapper;
+
+  public function __construct() {
+    parent::__construct();
+
+    $this->usuarioMapper = new UsuarioMapper();
+
+    // Users controller operates in a "welcome" layout
+    // different to the "default" layout where the internal
+    // menu is displayed
+    $this->view->setLayout("welcome");
+  }
+
 
     /* GET usuario*/
       public static function getAutorNota($idNota){
@@ -39,7 +55,7 @@ class UsuarioController{
         //Creamos el usuario
         $usuario = new Usuario();
 
-        
+
         $usuario->setLogin($login);
         $usuario->setEmail($email);
         $usuario->setPassword($password);
@@ -47,7 +63,7 @@ class UsuarioController{
 
         $usuario->guardarUsuario($usuario);
 
-        header("Location: ../index.php");
+        $this->view->redirect("nota", "index");
       }
 
     } //FIN Registrar Usuario*/
@@ -69,8 +85,8 @@ class UsuarioController{
     					header("Location: ../views/error.php?error=$error");
 
     				}else{
-    					$_SESSION["IdUsuario"] = $usuario->getIdUsuario();
-    					header("Location: ../views/verNotas.php");
+    					$_SESSION["currentuser"] = $usuario->getIdUsuario();
+    					$this->view->redirect("nota", "index");
     			    }
     	    }else{
     	    		$_SESSION["idUsuario"] = null;
@@ -87,7 +103,7 @@ class UsuarioController{
     		session_unset();
     		session_destroy();
     		// redireccionamos
-    		header("Location:../index.php");
+    		$this->view->redirect("nota", "index");
     		die();
       }
 
