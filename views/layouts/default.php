@@ -20,16 +20,16 @@ $currentuser = $view->getVariable("currentusername");
 	<!-- header -->
 	<header  id="main-header">
 		<?php if (isset($currentuser)): ?>
-			<id="logoCabecera"><img class="logo" src = "../img/icono.png"/>
+			<id="logoCabecera"><img class="logo" src = "../../img/icono.png"/>
 
-		  <a href="index.php?controller=language&accion=change&lang=es" id = "salir"><?= i18n("Español") ?></a>
-		  <a href="index.php?controller=language&accion=change&lang=en" id = "salir"><?= i18n("Inglés") ?></a>
+		  <a href="index.php?controller=language&action=change&lang=es" id = "salir"><?= i18n("Español") ?></a>
+		  <a href="index.php?controller=language&action=change&lang=en" id = "salir"><?= i18n("Inglés") ?></a>
 
 		</div>
 		  <div class = "bloque">
 		    <br><br><br>
 		   <!-- <a id = "salir" href="misNotasCompartidas.php"><?= i18n("Notas compartidas")?></a>-->
-		    <a id = "salir" href="index.php?controller=usuario&accion=logout"><?= i18n("Salir")?></a>
+		    <a id = "salir" href="index.php?controller=usuario&action=logout"><?= i18n("Salir")?></a>
 		  </div>
 
 		<?php endif ?>

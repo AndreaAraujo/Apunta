@@ -63,14 +63,26 @@ class UsuarioController extends BaseController{
 
         $usuario->guardarUsuario($usuario);
 
-        $this->view->redirect("nota", "index");
+        $this->view->redirect("views", "index");
       }
+
+      // Put the User object visible to the view
+  		$this->view->setVariable("usuario", $usuario);
+
+  		// render the view (/view/users/register.php)
+  		$this->view->render("views", "registro");
 
     } //FIN Registrar Usuario*/
 
+
+
       public static function login() {
     		/*Comprobamos si nos pasan un Usuario por metodo POST*/
+
     		 if(!isset($_SESSION)) session_start();
+
+
+
     	    if (isset($_POST["logUsuario"]) && isset($_POST["conUsuario"])){
 
     	    		$usuario = Usuario::obtenerDatos($_POST["logUsuario"], md5($_POST["conUsuario"]));
@@ -86,14 +98,16 @@ class UsuarioController extends BaseController{
 
     				}else{
     					$_SESSION["currentuser"] = $usuario->getIdUsuario();
-    					$this->view->redirect("nota", "index");
+    					$this->view->redirect("usuario", "index");
     			    }
     	    }else{
-    	    		$_SESSION["idUsuario"] = null;
+    	    		$_SESSION["IdUsuario"] = null;
 
     				$error= i18n("Nombre de usuario y/o contraseña incorrectos");
     				header("Location: ../views/error.php?error=$error");
-    	     }
+          }
+
+
 
     	  }
 
@@ -103,7 +117,7 @@ class UsuarioController extends BaseController{
     		session_unset();
     		session_destroy();
     		// redireccionamos
-    		$this->view->redirect("nota", "index");
+    		$this->view->redirect("usuario", "index");
     		die();
       }
 

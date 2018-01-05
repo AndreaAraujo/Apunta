@@ -96,13 +96,15 @@ $view->setVariable("nombre", "Nota");
 
 	<center >
 
-		<form action="index.php?controller=usuario&accion=login"   method="post" class ="formulario" role = "form">
+		<form action="index.php?controller=usuario&action=login"   method="post" class ="formulario" role = "form">
 		<!--<form action="index.php?controlador=usuario&amp;accion=login"   method="post" class ="formulario" role = "form">-->
 			<label for = "logUsuario"><?= i18n("Nombre de usuario")?>:</label>
 			<input type="text" name="logUsuario"><br><br>
 			<label for = "conUsuario"><?= i18n("Contraseña")?>:</label>
 			<input type="password" name="conUsuario"><br><br>
-			<a href="views/registro.php" id="reg"><?= i18n("¡Regístrate aquí!")?></a>
+			<a href="index.php?controller=usuario&action=registro" id="reg"><?= i18n("¡Regístrate aquí!")?></a>
+
+
 			<button type="submit" class="btn btn-default" id ="reg"><?= i18n("Iniciar sesión")?></button>
 		</form>
 
