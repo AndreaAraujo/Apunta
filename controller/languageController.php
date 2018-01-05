@@ -2,7 +2,7 @@
 //file: controller/languageController.php
 require_once(__DIR__."/../core/I18n.php");
 
-class LanguageController {
+class languageController {
 	const LANGUAGE_SETTING = "__language__";
 
 	public function change() {

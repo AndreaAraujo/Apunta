@@ -22,7 +22,7 @@ if(!isset($_SESSION)) session_start();
     <script src="../js/bootstrap.min.js"></script>
 	</head>
 
-	<body><!
+	<body>
     <div class="container" id="login">
 
 			<center >
