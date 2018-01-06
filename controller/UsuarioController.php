@@ -79,7 +79,7 @@ class UsuarioController extends BaseController{
       public static function login() {
     		/*Comprobamos si nos pasan un Usuario por metodo POST*/
 
-    		 if(!isset($_SESSION)) session_start();
+    		// if(!isset($_SESSION)) session_start();
 
 
 
@@ -91,22 +91,22 @@ class UsuarioController extends BaseController{
     				//User no existe
     				if ($usuario==NULL) {
 
-    					$_SESSION["IdUsuario"] = null;
+    					$_SESSION["currentuser"] = null;
 
-    					$error= i18n("Nombre de usuario y/o contraseña incorrectos");
-    					header("Location: ../views/error.php?error=$error");
+    					/*$error= i18n("Nombre de usuario y/o contraseña incorrectos");
+    					header("Location: ../views/error.php?error=$error");*/
 
     				}else{
     					$_SESSION["currentuser"] = $usuario->getIdUsuario();
     					$this->view->redirect("usuario", "index");
     			    }
     	    }else{
-    	    		$_SESSION["IdUsuario"] = null;
+    	    		$_SESSION["currentuser"] = null;
 
-    				$error= i18n("Nombre de usuario y/o contraseña incorrectos");
-    				header("Location: ../views/error.php?error=$error");
+    				/*$error= i18n("Nombre de usuario y/o contraseña incorrectos");
+    				header("Location: ../views/error.php?error=$error");*/
           }
-
+	         $this->view->render("users", "index");
 
 
     	  }

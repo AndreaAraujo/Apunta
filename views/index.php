@@ -7,9 +7,9 @@ $view = ViewManager::getInstance();
 $notas = $view->getVariable("nota");
 $usuarios = $view->getVariable("usuario");
 $currentuser = $view->getVariable("currentusername");
-
+/*
 $view->setVariable("nombre", "Nota");
-
+*/
 ?><h1><?=i18n("notaaas")?></h1>
 
 
@@ -19,8 +19,10 @@ $view->setVariable("nombre", "Nota");
 
 <div>
 
-	<?php	if (isset($currentuser)){ ?>
-
+	<?php	if (isset($currentuser)){
+		$row = UsuarioController::getNotasUsuario($idUsuario);
+	  $rowC = UsuarioController::getNotasUsuarioCompartidas($idUsuario);
+?>
 
 	<div id="main-content" >
 		<h1><p align= center><?= i18n("MIS NOTAS")?></h1>

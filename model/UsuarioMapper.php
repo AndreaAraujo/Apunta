@@ -1,10 +1,14 @@
 <?php
-require_once(__DIR__."/../conexion/bdConexion.php");
+require_once(__DIR__."/../core/PDOConnection.php");
 
 
 class UsuarioMapper{
 
+  private $db ;
 
+  public function __construct() {
+    $this->db = PDOConnection::getInstance();
+  }
 
   /*Buscamos si existe un Usuario por su login, devolvemos true si existe*/
   public static function existeUsuario($login) {
@@ -58,15 +62,14 @@ public static function obtenerUsuario($idNota){
 
 
    /*Mira si el Usuario es valido y devuelve true.*/
-  public static function esValidoUsuario($login, $password) {
-      global $connect;
-      $resultado = mysqli_query($connect, 'SELECT * FROM usuario WHERE login="'.$login.'" AND password = "'.$password.'"');
-      $busqueda = mysqli_num_rows($resultado);
+  public  function esValidoUsuario($login, $password) {
 
-      if( $busqueda > 0) {
+      $stmt = $this->db->prepare("SELECT * FROM usuario WHERE login=? AND password = ?");
+      $stmt->execute(array($login, $password));
 
-          return true;
-      }
+      if ($stmt->fetchColumn() > 0) {
+  			return true;
+  		}
   }
 
      /*Buscamos Usuario por su LOGIN*/

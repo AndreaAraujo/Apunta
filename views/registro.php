@@ -1,7 +1,7 @@
 <?php
 //file: view/users/register.php
 
-require_once(__DIR__."/../../core/ViewManager.php");
+require_once(__DIR__."/../core/ViewManager.php");
 $view = ViewManager::getInstance();
 
 $usuario = $view->getVariable("usuario");
@@ -13,7 +13,7 @@ $view->setVariable("title", "Register");
     <div class="container" id="login">
       <center>
 
-				<form action="index.php?controller=users&amp;action=registro" method="post" class ="formulario" role = "form">
+				<form action="index.php?controller=users&action=registro" method="post" class ="formulario" role = "form">
 
 					<label for = "logUsuario"><?= i18n("Nombre de usuario")?>:</label>
 					<input type="text" name="logUsuario">
