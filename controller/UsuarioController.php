@@ -1,7 +1,7 @@
 <?php
 
 require_once(__DIR__."/../core/ViewManager.php");
-
+require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../controller/BaseController.php");
 require_once(__DIR__."/../model/UsuarioMapper.php");
 require_once(__DIR__."/../model/Usuario.php");
@@ -87,7 +87,7 @@ class UsuarioController extends BaseController{
 
     	    		$usuario = Usuario::obtenerDatos($_POST["logUsuario"], md5($_POST["conUsuario"]));
 
-    	    		$usuario = Usuario::obtenerDatos($_POST["logUsuario"], md5($_POST["conUsuario"]));
+    	    		
     				//User no existe
     				if ($usuario==NULL) {
 

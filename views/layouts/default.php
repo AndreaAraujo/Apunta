@@ -11,7 +11,7 @@ $currentuser = $view->getVariable("currentusername");
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/index.css" type="text/css">
 	<!-- enable ji18n() javascript function to translate inside your scripts -->
-	<script src="index.php?controller=language&amp;accion=i18njs">
+	<script src="index.php?controller=language&amp;action=i18njs">
 	</script>
 	<?= $view->getFragment("css") ?>
 	<?= $view->getFragment("javascript") ?>
