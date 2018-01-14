@@ -50,13 +50,10 @@ public static function obtenerUsuario($idNota){
 
 
   /* Guardamos una usuario en la BD*/
-    public static function guardarUsuario($usuario){
-      global $connect;
-      $resultado = false;
-      $sqlcrear= "INSERT INTO usuario (login, password, email)VALUES('";
-      $sqlcrear = $sqlcrear.$usuario->getLogin()."','".$usuario->getPassword()."','".$usuario->getEmail()."')";
-      $resultado = mysqli_query($connect, $sqlcrear);
-      return $resultado;
+    public  function guardarUsuario($usuario){
+      $stmt = $this->db->prepare("INSERT INTO usuario (login, password, email)VALUES(?,?,?)");
+      $stmt->execute(array($usuario->getLogin(), $usuario->getPassword(),$usuario->getEmail()));
+      
     }
 
 
@@ -75,27 +72,29 @@ public static function obtenerUsuario($idNota){
      /*Buscamos Usuario por su LOGIN*/
      public static function findByUserName($login)
      {
-         global $connect;
-         $resultado = mysqli_query($connect, 'SELECT * FROM usuario WHERE login ="'.$login.'"');
-         if (mysqli_num_rows($resultado) > 0) {
-             $row = mysqli_fetch_assoc($resultado);
-             $usuario= new Usuario($row['IdUsuario'],$row['login'],$row['password'],$row['email']);
-             return $usuario;
-         } else {
-             return NULL;
-         }
+
+       $stmt = $this->db->prepare("SELECT * FROM usuario WHERE login =?");
+       $stmt->execute(array($login));
+       $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+       if($row != null) {
+         $usuario= new Usuario($row['IdUsuario'],$row['login'],$row['password'],$row['email']);
+         return $usuario;
+       } else {
+         return NULL;
+       }
      }
 
+     public  function getNotasUsuario($idUsuario){
+       $stmt = $this->db->prepare("SELECT * FROM nota WHERE Usuario_idUsuario= ? ");
+       $stmt->execute(array($idUsuario));
 
-     /*Buscamos las notas creada por el usuario*/
-     public static function getNotasUsuario($idUsuario){
-       global $connect;
-         $resultado = mysqli_query($connect, 'SELECT * FROM nota WHERE Usuario_idUsuario= "'.$idUsuario.'" ');
-         if (mysqli_num_rows($resultado) > 0) {
-             return $resultado;
-         } else {
-             return NULL;
-         }
+       if ($stmt->fetchColumn() > 0) {
+         return $stmt;
+       }else{
+
+         return NULL;
+       }
      }
 
      /*Buscamos las notas compartidas por el usuario*/

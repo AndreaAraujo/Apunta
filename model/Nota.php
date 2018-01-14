@@ -55,9 +55,9 @@ class Nota {
       }
 
       /* Guardamos una Nota en la BD*/
-      public static function guardarNota($nota){
+    /*  public static function guardarNota($nota){
         return NotaMapper::guardarNota($nota);
-      }
+      }*/
       /*Obtenemos datos de la nota por su nombre */
       public static function datosNota($nombre) {
         if ($nombre) {
@@ -68,7 +68,7 @@ class Nota {
       }
 
       /*Comprobacion existe nota... Si existe nota devuelve Objeto Nota*/
-        public static function obtenerDatos($idNota) {
+      /*  public static function obtenerDatos($idNota) {
           if ($idNota) {
               if ($res = NotaMapper::esValidoNota($idNota)) {
 
@@ -79,7 +79,7 @@ class Nota {
           } else {
                   return NULL;
           }
-        }
+        }*/
 
 
 
@@ -115,22 +115,23 @@ public static function notasBuscadas($nombre) {
         }
   }
 
-
+/*
   public static function update($idNota, $nombre, $contenido){
      return NotaMapper::update($idNota, $nombre,$contenido);
-  }
+  }*/
+  /*
   public static function delete($idNota){
 
      NotaMapper::delete($idNota);
 
-  }
+  }*/
 
-
+/*
   public static function comprobarNota_Usuario($idNota,$idUsuario){
 
     return  NotaMapper::notaByUsuario($idNota,$idUsuario);
 
-  }
+}*/
 
 
 

@@ -54,21 +54,22 @@ class Usuario {
 
 
       /* Guardamos un Usuario en la BD*/
-      public static function guardarUsuario($usuario){
+
+    /*  public static function guardarUsuario($usuario){
         return UsuarioMapper::guardarUsuario($usuario);
-      }
+      }*/
       /*Obtenemos datos del usuario por su nombre*/
-      public static function datosUsuario($usuario) {
+    /*  public static function datosUsuario($usuario) {
         if ($usuario) {
                 return UsuarioMapper::findByNomUsuario($usuario);
             } else {
                 return null;
             }
-      }
+      }*/
 
 
       /*Comprobacion existe usuario... Si existe usuario devuelve mensaje*/
-        public static function obtenerEmail($idNota) {
+    /*    public static function obtenerEmail($idNota) {
 
               if ($res = NotaMapper::esValidoNota($idNota)) {
 
@@ -77,7 +78,7 @@ class Usuario {
                       return NULL;
               }
 
-        }
+        }*/
 
 
         /*Comprobamos si se puede registrar el usuario. Si se puede retornamos un TRUE*/
@@ -132,7 +133,7 @@ class Usuario {
 
 
       /*Comprobacion existe Usuario... Si existe usuario devuelve un Objeto Usuario*/
-      public static function obtenerDatos($login, $password) {
+    /*  public static function obtenerDatos($login, $password) {
         if ($login && $password) {
             if ($res = UsuarioMapper::esValidoUsuario($login, $password)) {
                     return UsuarioMapper::findByUserName($login);
@@ -142,20 +143,20 @@ class Usuario {
             } else {
                 return null;
             }
-      }
-      public static function getNotasCreadas($idUsuario){
+      }*/
+/*      public static function getNotasCreadas($idUsuario){
         return $resultado = UsuarioMapper::getNotasUsuario($idUsuario);
-      }
+      }*/
 
-      public static function getNotasCompartidas($idUsuario){
+      /*public static function getNotasCompartidas($idUsuario){
         return $resultado = UsuarioMapper::getNotasCompartidas($idUsuario);
-      }
+      }*/
 
 
       /*Obtener idUsuario a partir del email*/
-      public static function getUsuario($email){
+    /*  public static function getUsuario($email){
             return $resultado = UsuarioMapper::getUsuario($email);
-      }
+      }*/
 
 
 

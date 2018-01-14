@@ -11,11 +11,16 @@ require_once(__DIR__."/../core/PDOConnection.php");
 class UsuarioController extends BaseController{
 
   private $usuarioMapper;
+  protected $view ;
 
   public function __construct() {
+  $this->view = ViewManager::getInstance();
     parent::__construct();
 
+
+
     $this->usuarioMapper = new UsuarioMapper();
+  //  $this->view = new ViewManager();
 
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
@@ -29,7 +34,15 @@ class UsuarioController extends BaseController{
       if(!isset($_SESSION)) session_start();
 
       $usuario = NULL;
-      $usuario = Usuario::obtenerEmail($idNota);
+
+      if ($usuario = NotaMapper::esValidoNota($idNota)) {
+
+            $usuario = UsuarioMapper::obtenerUsuario($idNota);
+      } else {
+              $usuario = NULL;
+      }
+
+
       if ($usuario == NULL){
     /*   $error = "No existe el usuario ";
         header("Location: ../views/error.php?error=$error");*/
@@ -61,7 +74,7 @@ class UsuarioController extends BaseController{
         $usuario->setPassword($password);
 
 
-        $usuario->guardarUsuario($usuario);
+        UsuarioMapper::guardarUsuario($usuario);
 
         $this->view->redirect("views", "index");
       }
@@ -79,15 +92,21 @@ class UsuarioController extends BaseController{
       public static function login() {
     		/*Comprobamos si nos pasan un Usuario por metodo POST*/
 
-    		// if(!isset($_SESSION)) session_start();
-
-
-
     	    if (isset($_POST["logUsuario"]) && isset($_POST["conUsuario"])){
 
-    	    		$usuario = Usuario::obtenerDatos($_POST["logUsuario"], md5($_POST["conUsuario"]));
 
-    	    		
+
+              if ($_POST["logUsuario"] &&  md5($_POST["conUsuario"])) {
+                  if ($res = UsuarioMapper::esValidoUsuario($_POST["logUsuario"] ,  md5($_POST["conUsuario"]))) {
+                          $usuario = UsuarioMapper::findByUserName($_POST["logUsuario"] );
+                  } else {
+                        $usuario = NULL;
+                  }
+
+             } else {
+                      $usuario = null;
+             }
+
     				//User no existe
     				if ($usuario==NULL) {
 
@@ -106,7 +125,7 @@ class UsuarioController extends BaseController{
     				/*$error= i18n("Nombre de usuario y/o contraseña incorrectos");
     				header("Location: ../views/error.php?error=$error");*/
           }
-	         $this->view->render("users", "index");
+	        $this->view->render("users", "index");
 
 
     	  }
@@ -123,17 +142,17 @@ class UsuarioController extends BaseController{
 
 
         /*Obtenemos todos las notas creadas por el usuario*/
-      	public static function getNotasUsuario($idUsuario){
+    /*  	public static function getNotasUsuario($idUsuario){
       		if(!isset($_SESSION)) session_start();
-      				 $nota = Usuario::getNotasCreadas($idUsuario);
+      				 $nota = UsuarioMapper::getNotasUsuario($idUsuario);
 
       				 return $nota;
-      	}
+      	}*/
 
         /*Obtenemos todos las notas compartidas con otros*/
       	public static function getNotasUsuarioCompartidas($idUsuario){
       		if(!isset($_SESSION)) session_start();
-      				 $nota = Usuario::getNotasCompartidas($idUsuario);
+      				 $nota =  UsuarioMapper::getNotasCompartidas($idUsuario);
 
       				 return $nota;
       	}
@@ -141,7 +160,7 @@ class UsuarioController extends BaseController{
         /*Obtener idUsuario a partir del email*/
         public static function getUsuario($email){
       		if(!isset($_SESSION)) session_start();
-      				 $usuario = Usuario::getUsuario($email);
+      				 $usuario = UsuarioMapper::getUsuario($email);
 
       				 return $usuario;
       	}

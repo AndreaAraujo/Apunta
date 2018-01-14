@@ -59,7 +59,7 @@ class NotaController extends BaseController{
           $nota->setContenido($contenido);
           $nota->setUsuario_idUsuario($idUsu);
 
-          $nota->guardarNota($nota);
+          NotaMapper::guardarNota($nota);
 
             header("Location: ../views/verNotas.php");
         }
@@ -71,11 +71,19 @@ class NotaController extends BaseController{
   public static function getNota($idNota,$idUsuario){
       if(!isset($_SESSION)) session_start();
 
-      if(Nota::comprobarNota_Usuario($idNota,$idUsuario)){
-
+      if(NotaMapper::notaByUsuario($idNota,$idUsuario);){
 
           $nota = NULL;
-          $nota = Nota::obtenerDatos($idNota);
+
+          if ( NotaMapper::esValidoNota($idNota)) {
+
+                  $nota = NotaMapper::findByIdNota($idNota);
+          } else {
+                $nota = NULL;
+          }
+
+
+
           if ($nota == NULL){
            $error = "No existe la nota ";
             header("Location: ../views/error.php?error=$error");
@@ -97,11 +105,17 @@ class NotaController extends BaseController{
 
       $idNota = $_POST['idNot'];
       $idUsuario = $_POST['idusu'];
-  if(Nota::comprobarNota_Usuario($idNota,$idUsuario)){
+  if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
 
         $contenido=$_POST['contenidoNota'];
         //Utilizamos la nota sin modificar por si no nos pasan unos argumentos, asignarle los que ya tenía
-        $notaSinModificar = Nota::obtenerDatos($idNota);
+        if (NotaMapper::esValidoNota($idNota)) {
+
+                $notaSinModificar = NotaMapper::findByIdNota($idNota);
+        } else {
+                $notaSinModificar = NULL;
+        }
+
         //Si no pasan nombre, cogemos el nombre que ya tenia
         if ($_POST['Nombre']!= null) {
           $nombre = $_POST['Nombre'];
@@ -119,7 +133,7 @@ class NotaController extends BaseController{
           if(Nota::registroValido($nombre,$contenido)){
 
               //Llamamos a la funcion que modifica la Nota
-              $nota = Nota::update($idNota,$nombre,$contenido);
+              $nota = NotaMapper::update($idNota, $nombre,$contenido);
               header("Location: ../views/verNotas.php");
             }
           }else{
@@ -164,7 +178,7 @@ class NotaController extends BaseController{
 
              if(Nota::comprobarNota_Usuario($idNota,$idUsuario)){
                     $idNota = $_POST['idNot'];
-                    Nota::delete($idNota);
+                    NotaMapper::delete($idNota);
                       //Redireccionamos a vista
                       header("Location: ../views/verNotas.php");
                     }else{
