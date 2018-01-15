@@ -17,6 +17,14 @@ class NotaCompartidaController{
               $notaCompartida = NULL;
               $notaCompartida = NotaCompartida::obtenerDatos($idNotaC);
 
+              if ( NotaCompartidaMapper::esValidoNotaC($idNotaC)) {
+
+                      $notaCompartida = NotaCompartidaMapper::findByIdNotaC($idNotaC);
+              } else {
+                    $notaCompartida = null;
+              }
+
+
               if ($notaCompartida == NULL){
 
                 return null;

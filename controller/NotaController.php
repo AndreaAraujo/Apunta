@@ -71,7 +71,7 @@ class NotaController extends BaseController{
   public static function getNota($idNota,$idUsuario){
       if(!isset($_SESSION)) session_start();
 
-      if(NotaMapper::notaByUsuario($idNota,$idUsuario);){
+      if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
 
           $nota = NULL;
 
@@ -176,17 +176,17 @@ class NotaController extends BaseController{
               $idUsuario = $_POST['idusu'];
               $idNota = $_POST['idNot'];
 
-             if(Nota::comprobarNota_Usuario($idNota,$idUsuario)){
+                if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
                     $idNota = $_POST['idNot'];
                     NotaMapper::delete($idNota);
                       //Redireccionamos a vista
-                      header("Location: ../views/verNotas.php");
-                    }else{
+                      ViewManager::getInstance()->render("users", "index");
+                }else{
                         $error = "No puedes eliminar esta nota";
                         header("Location: ../views/error.php?error=$error");
 
-                    }
-}
+                  }
+              }
 
 
 }

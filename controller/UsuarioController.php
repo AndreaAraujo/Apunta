@@ -14,13 +14,11 @@ class UsuarioController extends BaseController{
   protected $view ;
 
   public function __construct() {
-  $this->view = ViewManager::getInstance();
     parent::__construct();
-
-
+    $this->view = ViewManager::getInstance();
 
     $this->usuarioMapper = new UsuarioMapper();
-  //  $this->view = new ViewManager();
+
 
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
@@ -76,7 +74,7 @@ class UsuarioController extends BaseController{
 
         UsuarioMapper::guardarUsuario($usuario);
 
-        $this->view->redirect("views", "index");
+        $this->view->render("views", "index");
       }
 
       // Put the User object visible to the view
@@ -117,7 +115,7 @@ class UsuarioController extends BaseController{
 
     				}else{
     					$_SESSION["currentuser"] = $usuario->getIdUsuario();
-    					$this->view->redirect("usuario", "index");
+    					  ViewManager::getInstance()->render("usuario", "index");
     			    }
     	    }else{
     	    		$_SESSION["currentuser"] = null;
@@ -125,7 +123,8 @@ class UsuarioController extends BaseController{
     				/*$error= i18n("Nombre de usuario y/o contraseña incorrectos");
     				header("Location: ../views/error.php?error=$error");*/
           }
-	        $this->view->render("users", "index");
+
+            ViewManager::getInstance()->render("users", "index");
 
 
     	  }
@@ -136,18 +135,18 @@ class UsuarioController extends BaseController{
     		session_unset();
     		session_destroy();
     		// redireccionamos
-    		$this->view->redirect("usuario", "index");
+    		ViewManager::getInstance()->redirect("usuario", "index");
     		die();
       }
 
 
         /*Obtenemos todos las notas creadas por el usuario*/
-    /*  	public static function getNotasUsuario($idUsuario){
-      		if(!isset($_SESSION)) session_start();
+      	public  function getNotasUsuario($idUsuario){
+      	//	if(!isset($_SESSION)) session_start();
       				 $nota = UsuarioMapper::getNotasUsuario($idUsuario);
 
       				 return $nota;
-      	}*/
+      	}
 
         /*Obtenemos todos las notas compartidas con otros*/
       	public static function getNotasUsuarioCompartidas($idUsuario){

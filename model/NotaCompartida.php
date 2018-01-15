@@ -32,7 +32,7 @@ class NotaCompartida {
     }
 
     /*Comprobacion existe nota... Si existe nota devuelve EMAIL usuario*/
-      public static function obtenerDatos($idNotaC) {
+  /*    public static function obtenerDatos($idNotaC) {
         if ($idNotaC) {
             if ($res = NotaCompartidaMapper::esValidoNotaC($idNotaC)) {
 
@@ -41,7 +41,7 @@ class NotaCompartida {
                   return null;
             }
         }
-      }
+      }*/
 
       /*Comprobacion existe nota... Si existe nota devuelve Objeto Nota*/
         public static function obtenerDatosNota($idNotaC) {
@@ -61,7 +61,7 @@ class NotaCompartida {
       public static function emailValido($email,$idNotaC){
 
           if (strlen($email) < 10 || strlen($email) > 50) {
-        
+
            return false;
          }
 

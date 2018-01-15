@@ -28,7 +28,7 @@ $currentuser = $view->getVariable("currentusername");
 		</div>
 		  <div class = "bloque">
 		    <br><br><br>
-		   <!-- <a id = "salir" href="misNotasCompartidas.php"><?= i18n("Notas compartidas")?></a>-->
+		    <a id = "salir" href="misNotasCompartidas.php"><?= i18n("Notas compartidas")?></a>
 		    <a id = "salir" href="index.php?controller=usuario&action=logout"><?= i18n("Salir")?></a>
 		  </div>
 

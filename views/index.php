@@ -2,6 +2,7 @@
 //file: view/posts/index.php
 
 require_once(__DIR__."/../core/ViewManager.php");
+require_once(__DIR__."/../controller/UsuarioController.php");
 $view = ViewManager::getInstance();
 
 $notas = $view->getVariable("nota");
@@ -10,18 +11,17 @@ $currentuser = $view->getVariable("currentusername");
 /*
 $view->setVariable("nombre", "Nota");
 */
+
 ?><h1><?=i18n("notaaas")?></h1>
-
-
-
-
-
 
 <div>
 
-	<?php	if (isset($currentuser)){
-		$row = UsuarioController::getNotasUsuario($idUsuario);
-	  $rowC = UsuarioController::getNotasUsuarioCompartidas($idUsuario);
+
+
+<?php
+	if (isset($currentuser)){
+		$row = UsuarioController::getNotasUsuario($currentuser);
+	  $rowC = UsuarioController::getNotasUsuarioCompartidas($currentuser);
 ?>
 
 	<div id="main-content" >
@@ -39,22 +39,25 @@ $view->setVariable("nombre", "Nota");
 				<?php
 				if($row!=null){
 					foreach ($row as $nota) {
-						$idNota =$nota['IdNota'];
-						$rowCompartir= NotaCompartidaController::getUsu_NotaCompartida($idNota);
+						$idNota  = $nota->getIdNota();
+						$rowCompartir= null;//NotaCompartidaController::getUsu_NotaCompartida($idNota);
 				?>
 
 				<div class="col-md-4">
-					<h2><?php echo $nota['nombre']; ?></h2>
-					<p><?php echo $nota['contenido']; ?></p>
+					<h2><?php echo $nota->getNombre() ?></h2>
+					<p><?php echo $nota->getContenido() ?></p>
 
-					<input type = "hidden" name="idusu" value="<?php echo $idUsuario ?>">
-					<a href="editarNota.php?id=<?php echo $nota['IdNota']; ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" id="btnEditar"></span><?= i18n("Editar")?></button></a>
-					<a href="compartirNota.php?id=<?php echo $nota['IdNota'] ?>"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share" id="btnCompartir"></span><?= i18n("Compartir")?></button></a>
+					<p>user <?php echo $currentuser ?></p>
+					<p>nota <?php echo $nota->getIdNota() ?></p>
+
+					<input type = "hidden" name="idusu" value="<?php echo $currentuser ?>">
+					<a href="editarNota.php?id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" id="btnEditar"></span><?= i18n("Editar")?></button></a>
+					<a href="compartirNota.php?id=<?php echo $nota->getIdNota() ?>"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share" id="btnCompartir"></span><?= i18n("Compartir")?></button></a>
 					<button type="submit" class="btn btn-default" form="borrar"><span class="glyphicon glyphicon-trash" id="btnEliminar"></span><?= i18n("Eliminar")?></button>
 
 					<form method= "post" action = "index.php?controller=nota&action=deleteNota" id="borrar">
-						<input type = "hidden" name="idusu" value="<?php echo $idUsuario ?>">
-						<input type="hidden"  name="idNot" value = "<?php echo $nota['IdNota'];?>">
+						<input type = "hidden" name="idusu" value="<?php echo $currentuser ?>">
+						<input type="hidden"  name="idNot" value = "<?php echo $nota->getIdNota() ?>">
 					</form>
 
 				<!--  mostrar la lista de los usu con los que se comparte la nota -->
@@ -62,7 +65,7 @@ $view->setVariable("nombre", "Nota");
 					if($rowCompartir!=null){
 					?>
 
-						<a href="listaCompartidos.php?id=<?php echo $nota['IdNota']; ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user" id="btnUser"></span><?= i18n("Compartido")?></button></a>
+						<a href="listaCompartidos.php?id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user" id="btnUser"></span><?= i18n("Compartido")?></button></a>
 
 
 				<?php

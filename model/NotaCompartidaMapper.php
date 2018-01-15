@@ -4,12 +4,30 @@ require_once(__DIR__."/../conexion/bdConexion.php");
 
 class NotaCompartidaMapper{
 
+  private $db ;
+
+  public function __construct() {
+    $this->db = PDOConnection::getInstance();
+  }
+
   public static function findByIdNotaC($idNotaC){
+
+    $stmt = PDOConnection::getInstance()->prepare("SELECT U.email FROM notas_compartidas C, usuario U WHERE C.idUsu = U.idUsuario and  idNota= ?");
+    $stmt->execute(array($idNotaC));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($row != null) {
+      $usuario= $row['email'];
+      return $usuario;
+    } else {
+      return NULL;
+    }
+    /*
       global $connect;
       $resultado = mysqli_query($connect,  "SELECT U.email FROM notas_compartidas C, usuario U WHERE C.idUsu = U.idUsuario and  idNota=\"$idNotaC\"");
 
           return $resultado;
-
+*/
   }
 
   public static function devolverNotaC($idNotaC){
@@ -21,14 +39,14 @@ class NotaCompartidaMapper{
 
 
   /*Mira si la Nota es valido y devuelve true.*/
-     public static function esValidoNotaC($idNotaC) {
-         global $connect;
-         $resultado = mysqli_query($connect,  "SELECT * FROM notas_compartidas WHERE idNota='".$idNotaC."'");
-         $busqueda = mysqli_num_rows($resultado);
+     public function esValidoNotaC($idNotaC) {
 
-         if( $busqueda > 0) {
-             return true;
-         }
+       $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM notas_compartidas WHERE idNota= ?");
+       $stmt->execute(array($idNotaC));
+
+       if ($stmt->fetchColumn() > 0) {
+         return true;
+       }
      }
 
      //Mirar si esta el email, y añado Usuarios

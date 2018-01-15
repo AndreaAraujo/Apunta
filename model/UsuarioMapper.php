@@ -53,7 +53,7 @@ public static function obtenerUsuario($idNota){
     public  function guardarUsuario($usuario){
       $stmt = $this->db->prepare("INSERT INTO usuario (login, password, email)VALUES(?,?,?)");
       $stmt->execute(array($usuario->getLogin(), $usuario->getPassword(),$usuario->getEmail()));
-      
+
     }
 
 
@@ -61,7 +61,7 @@ public static function obtenerUsuario($idNota){
    /*Mira si el Usuario es valido y devuelve true.*/
   public  function esValidoUsuario($login, $password) {
 
-      $stmt = $this->db->prepare("SELECT * FROM usuario WHERE login=? AND password = ?");
+      $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM usuario WHERE login=? AND password = ?");
       $stmt->execute(array($login, $password));
 
       if ($stmt->fetchColumn() > 0) {
@@ -73,7 +73,7 @@ public static function obtenerUsuario($idNota){
      public static function findByUserName($login)
      {
 
-       $stmt = $this->db->prepare("SELECT * FROM usuario WHERE login =?");
+       $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM usuario WHERE login =?");
        $stmt->execute(array($login));
        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -86,26 +86,40 @@ public static function obtenerUsuario($idNota){
      }
 
      public  function getNotasUsuario($idUsuario){
-       $stmt = $this->db->prepare("SELECT * FROM nota WHERE Usuario_idUsuario= ? ");
+
+       $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM nota WHERE Usuario_idUsuario= ? ");
        $stmt->execute(array($idUsuario));
+   		 $notas_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-       if ($stmt->fetchColumn() > 0) {
-         return $stmt;
-       }else{
+   		 $notas = array();
 
-         return NULL;
-       }
+   		 foreach ($notas_db as $nota) {
+
+   	  		array_push($notas, new Nota($nota["IdNota"], $nota["nombre"], $nota["contenido"]));
+   	  	}
+
+   	     return $notas;
+
      }
 
      /*Buscamos las notas compartidas por el usuario*/
-     public static function getNotasCompartidas($idUsuario){
-       global $connect;
-         $resultado = mysqli_query($connect, 'SELECT N.IdNota , N.nombre , N.contenido FROM nota N , notas_compartidas C  WHERE C.idUsu= "'.$idUsuario.'" AND  N.IdNota = C.idNota  ');
-         if (mysqli_num_rows($resultado) > 0) {
-             return $resultado;
-         } else {
-             return NULL;
-         }
+     public  function getNotasCompartidas($idUsuario){
+
+
+             $stmt = PDOConnection::getInstance()->prepare("SELECT N.IdNota , N.nombre , N.contenido FROM nota N , notas_compartidas C  WHERE C.idUsu= ? AND  N.IdNota = C.idNota ");
+             $stmt->execute(array($idUsuario));
+             $notasC_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+         		 $notasC = array();
+
+         		 foreach ($notasC_db as $notaC) {
+
+         	  		array_push($notasC, new Nota($notaC["IdNota"], $notaC["nombre"], $notaC["contenido"]));
+         	  	}
+
+         	     return $notasC;
+
+
      }
 
      /*Obtener idUsuario a partir del email*/
