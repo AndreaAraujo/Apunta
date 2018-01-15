@@ -61,7 +61,7 @@ class NotaController extends BaseController{
 
           NotaMapper::guardarNota($nota);
 
-            header("Location: ../views/verNotas.php");
+            ViewManager::getInstance()->render("users", "index");
         }
 
       } //FIN CREAR nota
@@ -82,18 +82,20 @@ class NotaController extends BaseController{
                 $nota = NULL;
           }
 
-
-
           if ($nota == NULL){
+            throw new Exception("No existe la nota");
+            /*
            $error = "No existe la nota ";
-            header("Location: ../views/error.php?error=$error");
+            header("Location: ../views/error.php?error=$error");*/
           }else{
             return $nota;
           }
     }else{
 
+      throw new Exception("No puedes ver esta nota");
+/*
       $error = "No puedes ver esta nota ".$idNota." y usuario: ".$idUsuario."";
-        header("Location: ../views/error.php?error=$error");
+        header("Location: ../views/error.php?error=$error");*/
 
     }
     } // FIN GET nota
@@ -134,11 +136,12 @@ class NotaController extends BaseController{
 
               //Llamamos a la funcion que modifica la Nota
               $nota = NotaMapper::update($idNota, $nombre,$contenido);
-              header("Location: ../views/verNotas.php");
+              ViewManager::getInstance()->render("users", "index");
             }
           }else{
-            $error = "No puedes modificar esta nota";
-              header("Location: ../views/error.php?error=$error");
+            throw new Exception("No puedes modificar esta nota");
+            /*$error = "No puedes modificar esta nota";
+              header("Location: ../views/error.php?error=$error");*/
 
           }
       }
@@ -182,9 +185,10 @@ class NotaController extends BaseController{
                       //Redireccionamos a vista
                       ViewManager::getInstance()->render("users", "index");
                 }else{
-                        $error = "No puedes eliminar esta nota";
+                  	throw new Exception("No puedes eliminar esta nota");
+                      /*  $error = "No puedes eliminar esta nota";
                         header("Location: ../views/error.php?error=$error");
-
+*/
                   }
               }
 

@@ -116,30 +116,25 @@ public static function update($idNota,$nombre,$contenido)
          return $resultado;
   }
   public static function delete($idNota){
-      global $connect;
-    return   $resultado = mysqli_query($connect, "DELETE FROM nota WHERE IdNota=\"$idNota\"");
-
+    $stmt = PDOConnection::getInstance()->prepare("DELETE FROM nota WHERE IdNota= ?");
+    $stmt->execute(array($idNota));
   }
 
   public static function notaByUsuario($idNota,$idUsuario){
 
-    global $connect;
-    $resultado = mysqli_query($connect,  "SELECT * FROM  nota WHERE IdNota=\"$idNota\" and Usuario_idUsuario = \"$idUsuario\"  ");
-    $busqueda = mysqli_num_rows($resultado);
+    $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM  nota WHERE IdNota= ? and Usuario_idUsuario = ?");
+    $stmt->execute(array($idNota, $idUsuario));
 
-   $resultado2 = mysqli_query($connect,  "SELECT * FROM  notas_compartidas WHERE idNota=\"$idNota\" and  idUsu= \"$idUsuario\" ");
-    $busqueda2 = mysqli_num_rows($resultado2);
+    $stmt2 = PDOConnection::getInstance()->prepare("SELECT * FROM  notas_compartidas WHERE idNota= ? and  idUsu= ? ");
+    $stmt2->execute(array($idNota, $idUsuario));
 
-    if( $busqueda > 0 ) {
-
-        return true;
+    if ($stmt->fetchColumn() > 0) {
+      return true;
     }
 
-    if( $busqueda2 > 0) {
-
-        return true;
+    if ($stmt2->fetchColumn() > 0) {
+      return true;
     }
-
   }
 
 }
