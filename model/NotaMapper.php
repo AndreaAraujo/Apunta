@@ -28,37 +28,71 @@ class NotaMapper{
   }
   /*Buscamos si existe una Nota por su Nombre, devolvemos true si existe*/
   public static function existeNota($nombre) {
-      global $connect;
+
+    $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM nota WHERE nombre= ? ");
+    $stmt->execute(array($nombre));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }
+
+      /*global $connect;
       $resultado = mysqli_query($connect, "SELECT * FROM nota WHERE nombre=\"$nombre\"");
       $busqueda = mysqli_num_rows($resultado);
       if( $busqueda > 0) {
 
           return true;
-      }
+      }*/
   }
   /*Buscamos si existe una Nota por su ID, devolvemos true si existe*/
   public static function existeIdNota($idNota) {
-      global $connect;
+
+    $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM nota WHERE $IdNota= ? ");
+    $stmt->execute(array($idNota));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }
+
+    /*  global $connect;
       $resultado = mysqli_query($connect, "SELECT * FROM nota WHERE $IdNota=\"$idNota\"");
       $busqueda = mysqli_num_rows($resultado);
       if( $busqueda > 0) {
 
           return true;
-      }
+      }*/
   }
 
   /* Guardamos una Nota en la BD*/
     public static function guardarNota($nota){
-      global $connect;
+
+      $stmt = PDOConnection::getInstance()->prepare("INSERT INTO nota (nombre,contenido,Usuario_idUsuario) VALUES (?,?,?) ");
+      $stmt->execute(array($nota->getNombre(),$nota->getContenido(),$nota->getUsuario_idUsuario()));
+
+    /*  global $connect;
       $resultado = false;
         $sqlcrear= "INSERT INTO nota (nombre,contenido,Usuario_idUsuario)VALUES ('";
       $sqlcrear = $sqlcrear.$nota->getNombre()."','".$nota->getContenido()."','".$nota->getUsuario_idUsuario()."')";
         $resultado = mysqli_query($connect, $sqlcrear);
-       return $resultado;
+       return $resultado;*/
     }
 
     /*Cogemos todos los datos de una Nota buscandolo por su ID y devolvemos un objeto nota*/
 public static function findByIdNota($idNota){
+
+  $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM nota WHERE IdNota= ?");
+  $stmt->execute(array($idNota));
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  if($row != null) {
+    $nota= new Nota($row['IdNota'],$row['nombre'],$row['contenido']);
+    return $nota;
+  } else {
+    return NULL;
+  }
+
+
+  /*
     global $connect;
     $resultado = mysqli_query($connect,   "SELECT * FROM nota WHERE IdNota=\"$idNota\"");
 
@@ -70,7 +104,7 @@ public static function findByIdNota($idNota){
     } else {
 
         return NULL;
-    }
+    }*/
 }
 
 
@@ -91,36 +125,42 @@ public static function findByIdNota($idNota){
 
   /*Mira si la Nota es valido y devuelve true.*/
      public static function esValidoNota($idNota) {
-         global $connect;
-         $resultado = mysqli_query($connect,  "SELECT * FROM nota WHERE IdNota='".$idNota."'");
+       $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM nota WHERE IdNota= ?");
+       $stmt->execute(array($idNota));
 
-         $busqueda = mysqli_num_rows($resultado);
-         if( $busqueda > 0) {
+         if ($stmt->fetchColumn() > 0) {
+          return true;
+        }
 
-             return true;
-         }
      }
      /*Buscamos todos las Notas*/
 public static function findActBySearch($nombre){
-    global $connect;
+
+  $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM nota WHERE nombre=? ");
+  $stmt->execute(array($nombre));
+
+  /*  global $connect;
     $resultado = mysqli_query($connect, "SELECT * FROM nota WHERE nombre=\"$nombre\" ");
-    return $resultado;
+    return $resultado;*/
 }
 
 
 
 public static function update($idNota,$nombre,$contenido)
   {
-      global $connect;
+    $stmt = PDOConnection::getInstance()->prepare("UPDATE nota SET nombre=?, contenido =? WHERE idNota=? ");
+    $stmt->execute(array($idNota,$nombre,$contenido));
+      /*global $connect;
       $resultado = mysqli_query($connect, "UPDATE nota SET nombre=\"$nombre\", contenido =\"$contenido\" WHERE idNota=\"$idNota\"");
-         return $resultado;
+      return $resultado;*/
   }
-  public static function delete($idNota){
+
+  public function delete($idNota){
     $stmt = PDOConnection::getInstance()->prepare("DELETE FROM nota WHERE IdNota= ?");
     $stmt->execute(array($idNota));
   }
 
-  public static function notaByUsuario($idNota,$idUsuario){
+  public  function notaByUsuario($idNota,$idUsuario){
 
     $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM  nota WHERE IdNota= ? and Usuario_idUsuario = ?");
     $stmt->execute(array($idNota, $idUsuario));

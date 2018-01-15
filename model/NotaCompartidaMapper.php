@@ -31,9 +31,10 @@ class NotaCompartidaMapper{
   }
 
   public static function devolverNotaC($idNotaC){
-      global $connect;
-      $resultado = mysqli_query($connect,  "SELECT * FROM notas_compartidas WHERE idNota=\"$idNotaC\"");
-          return $resultado;
+
+    $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM notas_compartidas WHERE idNota= ?");
+    $stmt->execute(array($idNotaC));
+      
   }
 
 
@@ -52,18 +53,15 @@ class NotaCompartidaMapper{
      //Mirar si esta el email, y añado Usuarios
      public static function estaEmail($email,$idNotaC){
 
+       $stmt = PDOConnection::getInstance()->prepare("SELECT idUsuario FROM usuario WHERE email= ?");
+       $stmt->execute(array($email));
 
-       global $connect;
+       if ($stmt->fetchColumn() > 0) {
 
-       $resultado = mysqli_query($connect,  "SELECT idUsuario FROM usuario WHERE email='".$email."'");
-       $busqueda = mysqli_num_rows($resultado);
+         $stmt2 = PDOConnection::getInstance()->prepare("SELECT * FROM notas_compartidas WHERE idUsu= (SELECT idUsuario FROM usuario WHERE email=?) AND idNota =? ");
+         $stmt2->execute(array($email,$idNotaC));
 
-       if( $busqueda > 0) {//se puede añadir
-
-         $resultado = mysqli_query($connect,  "SELECT * FROM notas_compartidas WHERE idUsu= (SELECT idUsuario FROM usuario WHERE email='".$email."') AND idNota = \"$idNotaC\"");
-         $busqueda = mysqli_num_rows($resultado);
-
-             if( $busqueda > 0) {
+             if( $stmt2 > 0) {
                 return false;
 
             }else{
@@ -77,42 +75,44 @@ class NotaCompartidaMapper{
      }
 
      /* Guardamos una NUEVA TUPLA EN notas_compartidas  */
-       public static function guardarNuevoUsuarioCompartido($notaC){
-         global $connect;
-         $resultado = false;
-         $sqlcrear= "INSERT INTO notas_compartidas (idNota, idUsu)VALUES('";
-         $sqlcrear = $sqlcrear.$notaC->getIdNotaCompartida()."','".$notaC->getIdUsu()."')";
-         $resultado = mysqli_query($connect, $sqlcrear);
-         return $resultado;
+       public function guardarNuevoUsuarioCompartido($notaC){
+
+         $stmt = PDOConnection::getInstance()->prepare("INSERT INTO notas_compartidas (idNota, idUsu) VALUES(?,?)");
+         $stmt->execute(array($notaC->getIdNotaCompartida(),$notaC->getIdUsu()));
+
        }
 
        /*Buscamos si existe una NotaC por su ID, devolvemos true si existe*/
        public static function existeIdNota($idNotaC) {
-           global $connect;
-           $resultado = mysqli_query($connect, "SELECT * FROM notas_compartidas WHERE $idNota=\"$idNotaC\"");
-           $busqueda = mysqli_num_rows($resultado);
-           if( $busqueda > 0) {
 
-               return true;
-           }
+         $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM notas_compartidas WHERE idNota=?");
+         $stmt->execute(array($idNotaC));
+
+         if ($stmt->fetchColumn() > 0) {
+           return true;
+         }
+
        }
 
        public static function delete($idNotaC){
-           global $connect;
-           $resultado = mysqli_query($connect, "DELETE FROM notas_compartidas WHERE idNota=\"$idNotaC\"");
-           return $resultado;
+
+         $stmt = PDOConnection::getInstance()->prepare("DELETE FROM notas_compartidas WHERE idNota=?");
+         $stmt->execute(array($idNotaC));
+
+
        }
 
        public static function deleteUsu($email){
-           global $connect;
-           $resultado = mysqli_query($connect, "DELETE FROM notas_compartidas WHERE idUsu=(SELECT IdUsuario FROM usuario WHERE email=\"$email\")");
-           return $resultado;
+         $stmt = PDOConnection::getInstance()->prepare("DELETE FROM notas_compartidas WHERE idUsu=(SELECT IdUsuario FROM usuario WHERE email= ?)");
+         $stmt->execute(array($email));
+
        }
 
        public static function descompartirN($idUsuario,$idNota){
-         global $connect;
-         $resultado = mysqli_query($connect, "DELETE FROM notas_compartidas WHERE idUsu=\"$idUsuario\" and idNota=\"$idNota\" ");
-         return $resultado;
+
+         $stmt = PDOConnection::getInstance()->prepare("DELETE FROM notas_compartidas WHERE idUsu=? and idNota=? ");
+         $stmt->execute(array($idUsuario,$idNota));
+
        }
 
 

@@ -102,33 +102,33 @@ class Usuario {
 
           if (strlen($login) < 4) {
             $errores["login"] = i18n("El nombre de usuario debe tener al menos 4 caracteres");
-            $error = i18n("El nombre de usuario debe tener al menos 4 caracteres");
-            header("Location: ../views/error.php?error=$error");
+          /*  $error = i18n("El nombre de usuario debe tener al menos 4 caracteres");
+            header("Location: ../views/error.php?error=$error");*/
 
           }
 
           if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errores ["email"]= i18n("La dirección de email introducida no es válida");
-            $error= i18n("La dirección de email introducida no es válida");
-            header("Location: ../views/error.php?error=$error");
+          /*  $error= i18n("La dirección de email introducida no es válida");
+            header("Location: ../views/error.php?error=$error");*/
           }
 
           if (strlen($password) < 5) {
             $errores["password"] = i18n("La contraseña debe tener al menos 5 caracteres");
-            $error= i18n("La contraseña debe tener al menos 5 caracteres");
-            header("Location: ../views/error.php?error=$error");
+          /*  $error= i18n("La contraseña debe tener al menos 5 caracteres");
+            header("Location: ../views/error.php?error=$error");*/
           }
 
           if ($password!=$confirmar) {
               $errores["confirmar"]= i18n("Las contraseñas no coinciden. Por favor, inténtelo de nuevo");
-                $error= i18n("Las contraseñas no coinciden. Por favor, inténtelo de nuevo");
-              header("Location: ../views/error.php?error=$error");
+              //  $error= i18n("Las contraseñas no coinciden. Por favor, inténtelo de nuevo");
+            //  header("Location: ../views/error.php?error=$error");
           }
 
 
-          if (sizeof($error)==0){
-              return true;
-          }
+          if (sizeof($errors)>0){
+      			throw new ValidationException($errors, "usuario no valido");
+      		}
       }
 
 

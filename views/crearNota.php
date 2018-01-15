@@ -48,9 +48,15 @@ if(!isset($_SESSION)) session_start();
 
 					   <input type="hidden" name="idUsu" value="<?php echo  $idUsuario;?>">
 
-					<button type="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-paperclip" id="btnGuardar"></span><?= i18n("Guardar")?></button>
-					<a href="verNotas.php"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
-	  </form>
+					<button type="submit" name="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-paperclip" id="btnGuardar"></span>Guardar</button>
+
+<!--
+            <input type="submit" name="submit" value="Guardar">-->
+
+
+          <a href="verNotas.php"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
+
+    </form>
 	  </div>
 	</div>
 

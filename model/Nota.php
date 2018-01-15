@@ -86,25 +86,23 @@ class Nota {
 
         /*Comprobamos si se puede registrar la Nota. Si se puede retornamos un TRUE*/
 public static function registroValido($nombre,$contenido){
-    $errores = array();
-    $error;
+    $errors = array();
+
 
     if (strlen(trim($nombre)) < 1 || strlen(trim($nombre)) > 50) {
-     $errores["nombre"] = "El nombre de la Nota debe tener entre 3 y 50 caracteres";
-     $error = i18n("El nombre de la Nota debe tener entre 3 y 50 caracteres");
-    header("Location: ../views/error.php?error=$error");
+     $errors["nombre"] = "El nombre de la Nota debe tener entre 3 y 50 caracteres";
+  //   $error = i18n("El nombre de la Nota debe tener entre 3 y 50 caracteres");
+  //  header("Location: ../views/error.php?error=$error");
     }
     if (strlen(trim($contenido)) < 1 || strlen(trim($contenido)) > 300) {
-     $errores["contenido"] = "El contenido de la Nota debe tener entre 5 y 300 caracteres";
-     $error = i18n("El contenido de la Nota debe tener entre 5 y 300 caracteres");
-     header("Location: ../views/error.php?error=$error");
+     $errors["contenido"] = "El contenido de la Nota debe tener entre 5 y 300 caracteres";
+    // $error = i18n("El contenido de la Nota debe tener entre 5 y 300 caracteres");
+    // header("Location: ../views/error.php?error=$error");
     }
-
-
-
-    if (sizeof($error)==0){
-     return true;
-   }
+    
+    if (sizeof($errors) > 0){
+      throw new ValidationException($errors, "Nota no valida");
+    }
 }
 
 public static function notasBuscadas($nombre) {

@@ -51,6 +51,8 @@ array(
 	"No puedes eliminar esta nota" => "You can not delete this note" ,
 	"No puedes modificar esta nota" => "You can not edit this note" ,
 	"No puedes modificar esta nota" => "You can not see this note" ,
-	"No puedes compartir esta nota" => "You can not share this note"
+	"No puedes compartir esta nota" => "You can not share this note",
+	"Usuario no valido" => "User not valid",
+	"Nota no valida" => "Note not valid"
 )
 ?>

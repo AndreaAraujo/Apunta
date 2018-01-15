@@ -12,24 +12,41 @@ class UsuarioMapper{
 
   /*Buscamos si existe un Usuario por su login, devolvemos true si existe*/
   public static function existeUsuario($login) {
+
+    $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM usuario WHERE login= ? ");
+    $stmt->execute(array($login));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }
+
+    /*
       global $connect;
       $resultado = mysqli_query($connect, "SELECT * FROM usuario WHERE login=\"$login\"");
       $busqueda = mysqli_num_rows($resultado);
       if( $busqueda > 0) {
 
           return true;
-      }
+      }*/
   }
 
   /*Buscamos si existe un Usuario por su email, devolvemos true si existe*/
   public static function existeUsuarioEmail($email) {
-      global $connect;
+
+    $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM usuario WHERE email= ? ");
+    $stmt->execute(array($email));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }
+
+    /*  global $connect;
       $resultado = mysqli_query($connect, "SELECT * FROM usuario WHERE email=\"$email\"");
       $busqueda = mysqli_num_rows($resultado);
       if( $busqueda > 0) {
 
           return true;
-      }
+      }*/
   }
 
   /*Cogemos todos los datos del usuario    buscandolo por su ID de lla nota*/

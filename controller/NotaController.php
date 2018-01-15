@@ -41,12 +41,14 @@ class NotaController extends BaseController{
 
   /*CREAR NOTA*/
       public static function crearNota(){
-      if(!isset($_SESSION)) session_start();
+      //if(!isset($_SESSION)) session_start();
+
+      if (isset($_POST["submit"])) {
 
         $nombre = $_POST['nomNota'];
         $contenido = $_POST['contenidoNota'];
         $idUsu = $_POST['idUsu'];
-        $idNota = "NULL";
+        $idNota = $this->currentUser;
 
         //Comprobamos si los datos introducidos son Correctos
         if(Nota::registroValido($nombre,$contenido)){
@@ -63,6 +65,13 @@ class NotaController extends BaseController{
 
             ViewManager::getInstance()->render("users", "index");
         }
+      }
+
+      // Put the Post object visible to the view
+      $this->view->setVariable("nota", $nota);
+
+      // render the view (/view/posts/add.php)
+      $this->view->render("notas", "views/crearNota");
 
       } //FIN CREAR nota
 
@@ -98,16 +107,18 @@ class NotaController extends BaseController{
         header("Location: ../views/error.php?error=$error");*/
 
     }
+
     } // FIN GET nota
 
 
     /*MODIFICAR NOTA*/
-  public static function modificarNota(){
-      if(!isset($_SESSION)) session_start();
+  public function modificarNota(){
+    //  if(!isset($_SESSION)) session_start();
 
-      $idNota = $_POST['idNot'];
-      $idUsuario = $_POST['idusu'];
-  if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
+      $idNota = $_REQUEST["id"];
+      $idUsuario = $this->currentUser;
+
+  //if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
 
         $contenido=$_POST['contenidoNota'];
         //Utilizamos la nota sin modificar por si no nos pasan unos argumentos, asignarle los que ya tenía
@@ -138,12 +149,12 @@ class NotaController extends BaseController{
               $nota = NotaMapper::update($idNota, $nombre,$contenido);
               ViewManager::getInstance()->render("users", "index");
             }
-          }else{
+        /*  }else{
             throw new Exception("No puedes modificar esta nota");
             /*$error = "No puedes modificar esta nota";
               header("Location: ../views/error.php?error=$error");*/
 
-          }
+        //  }
       }
 
 /*

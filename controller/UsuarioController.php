@@ -24,6 +24,7 @@ class UsuarioController extends BaseController{
     // different to the "default" layout where the internal
     // menu is displayed
     $this->view->setLayout("welcome");
+  //  ViewManager::getInstance()->render("usuario", "index");
   }
 
 
@@ -44,6 +45,7 @@ class UsuarioController extends BaseController{
       if ($usuario == NULL){
     /*   $error = "No existe el usuario ";
         header("Location: ../views/error.php?error=$error");*/
+          throw new Exception("No existe el usuario");
       }else{
         return $usuario;
       }
@@ -109,7 +111,7 @@ class UsuarioController extends BaseController{
     				if ($usuario==NULL) {
 
     					$_SESSION["currentuser"] = null;
-
+              throw new Exception("Usuario no valido");
     					/*$error= i18n("Nombre de usuario y/o contraseña incorrectos");
     					header("Location: ../views/error.php?error=$error");*/
 
@@ -119,24 +121,28 @@ class UsuarioController extends BaseController{
     			    }
     	    }else{
     	    		$_SESSION["currentuser"] = null;
-
+              throw new Exception("Usuario no valido");
     				/*$error= i18n("Nombre de usuario y/o contraseña incorrectos");
     				header("Location: ../views/error.php?error=$error");*/
           }
 
-            ViewManager::getInstance()->render("users", "index");
+
 
 
     	  }
 
 
     	public static function logout() {
-    		if(!isset($_SESSION)) session_start();
+    		/*if(!isset($_SESSION)) session_start();
     		session_unset();
     		session_destroy();
     		// redireccionamos
-    		ViewManager::getInstance()->redirect("usuario", "index");
-    		die();
+    		ViewManager::getInstance()->render("usuario", "index");
+    		die();*/
+
+        session_destroy();
+
+    		 ViewManager::getInstance()->render("users", "index");
       }
 
 
