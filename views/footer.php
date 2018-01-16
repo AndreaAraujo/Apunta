@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../controller/defaultController.php");
+require_once(__DIR__."/../core/ViewManager.php");
 
 
 ?>

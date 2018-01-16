@@ -47,8 +47,7 @@ class NotaController extends BaseController{
 
         $nombre = $_POST['nomNota'];
         $contenido = $_POST['contenidoNota'];
-        $idUsu = $_POST['idUsu'];
-        $idNota = $this->currentUser;
+        $idUsuario = $_POST['idUsu'];//$_POST['idUsu'];
 
         //Comprobamos si los datos introducidos son Correctos
         if(Nota::registroValido($nombre,$contenido)){
@@ -56,7 +55,6 @@ class NotaController extends BaseController{
           //Creamos el Nota
           $nota = new Nota();
 
-          $nota->setIdNota($idNota);
           $nota->setNombre($nombre);
           $nota->setContenido($contenido);
           $nota->setUsuario_idUsuario($idUsu);
@@ -68,10 +66,10 @@ class NotaController extends BaseController{
       }
 
       // Put the Post object visible to the view
-      $this->view->setVariable("nota", $nota);
+      //ViewManager::getInstance()->setVariable("nota", $nota);
 
       // render the view (/view/posts/add.php)
-      $this->view->render("notas", "views/crearNota");
+      ViewManager::getInstance()->render("notas", "crearNota");
 
       } //FIN CREAR nota
 

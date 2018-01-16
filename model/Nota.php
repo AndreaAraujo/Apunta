@@ -99,7 +99,7 @@ public static function registroValido($nombre,$contenido){
     // $error = i18n("El contenido de la Nota debe tener entre 5 y 300 caracteres");
     // header("Location: ../views/error.php?error=$error");
     }
-    
+
     if (sizeof($errors) > 0){
       throw new ValidationException($errors, "Nota no valida");
     }

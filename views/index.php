@@ -28,7 +28,7 @@ $view->setVariable("nombre", "Nota");
 		<h1><p align= center><?= i18n("MIS NOTAS")?></h1>
 		<div class="container">
 
-			<a href="crearNota.php">
+			<a href="index.php?controller=nota&action=crearNota">
 			<button type="button" class="btn btn-default btn-lg" ><span class="glyphicon glyphicon-plus" id="btnCrearNota"></span><?= i18n("Añadir nota")?></button>
 			</a>
 
@@ -52,7 +52,7 @@ $view->setVariable("nombre", "Nota");
 
 					<input type = "hidden" name="idusu" value="<?php echo $currentuser ?>">
 					<input type="hidden"  name="idNot" value = "<?php echo $nota->getIdNota() ?>">
-					
+
 					<a href="index.php?controller=nota&action=modificarNota&id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" id="btnEditar"></span><?= i18n("Editar")?></button></a>
 					<a href="compartirNota.php?id=<?php echo $nota->getIdNota() ?>"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share" id="btnCompartir"></span><?= i18n("Compartir")?></button></a>
 					<button type="submit" class="btn btn-default" form="borrar"><span class="glyphicon glyphicon-trash" id="btnEliminar"></span><?= i18n("Eliminar")?></button>
