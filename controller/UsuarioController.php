@@ -117,7 +117,7 @@ class UsuarioController extends BaseController{
 
     				}else{
     					$_SESSION["currentuser"] = $usuario->getIdUsuario();
-    					  ViewManager::getInstance()->render("usuario", "index");
+                header("Location: index.php");
     			    }
     	    }else{
     	    		$_SESSION["currentuser"] = null;

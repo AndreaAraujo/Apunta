@@ -1,6 +1,9 @@
 <?php
 require_once(__DIR__."/../core/PDOConnection.php");
 
+require_once(__DIR__."/../model/Usuario.php");
+require_once(__DIR__."/../model/Nota.php");
+
 
 class UsuarioMapper{
 

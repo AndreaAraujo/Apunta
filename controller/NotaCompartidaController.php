@@ -1,6 +1,4 @@
 <?php
-
-
 require_once(__DIR__."/../conexion/bdConexion.php");
 require_once(__DIR__."/../model/NotaMapper.php");
 require_once(__DIR__."/../model/Nota.php");
