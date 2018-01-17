@@ -126,8 +126,9 @@ class Usuario {
           }
 
 
-          if (sizeof($errors)>0){
-      			throw new ValidationException($errors, "usuario no valido");
+          if (sizeof($errores)>0){
+      		//	throw new ValidationException($errores, "usuario no valido");
+            return false;
       		}
       }
 

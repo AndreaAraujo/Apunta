@@ -64,10 +64,11 @@ class NotaMapper{
   }
 
   /* Guardamos una Nota en la BD*/
-    public static function guardarNota($nota){
+    public function guardarNota($nota){
 
       $stmt = PDOConnection::getInstance()->prepare("INSERT INTO nota (nombre,contenido,Usuario_idUsuario) VALUES (?,?,?) ");
       $stmt->execute(array($nota->getNombre(),$nota->getContenido(),$nota->getUsuario_idUsuario()));
+      return PDOConnection::getInstance()->lastInsertId();
 
     /*  global $connect;
       $resultado = false;

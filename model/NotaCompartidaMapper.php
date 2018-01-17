@@ -17,6 +17,7 @@ class NotaCompartidaMapper{
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($row != null) {
+
       $usuario= $row['email'];
       return $usuario;
     } else {
@@ -34,7 +35,7 @@ class NotaCompartidaMapper{
 
     $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM notas_compartidas WHERE idNota= ?");
     $stmt->execute(array($idNotaC));
-      
+
   }
 
 
@@ -48,6 +49,7 @@ class NotaCompartidaMapper{
        if ($stmt->fetchColumn() > 0) {
          return true;
        }
+       return false;
      }
 
      //Mirar si esta el email, y añado Usuarios
@@ -61,7 +63,7 @@ class NotaCompartidaMapper{
          $stmt2 = PDOConnection::getInstance()->prepare("SELECT * FROM notas_compartidas WHERE idUsu= (SELECT idUsuario FROM usuario WHERE email=?) AND idNota =? ");
          $stmt2->execute(array($email,$idNotaC));
 
-             if( $stmt2 > 0) {
+             if( $stmt2->fetchColumn()  > 0) {
                 return false;
 
             }else{

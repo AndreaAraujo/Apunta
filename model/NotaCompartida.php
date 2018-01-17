@@ -44,7 +44,7 @@ class NotaCompartida {
       }*/
 
       /*Comprobacion existe nota... Si existe nota devuelve Objeto Nota*/
-        public static function obtenerDatosNota($idNotaC) {
+        /*public static function obtenerDatosNota($idNotaC) {
           if ($idNotaC) {
               if ($res = NotaCompartidaMapper::esValidoNotaC($idNotaC)) {
 
@@ -53,7 +53,7 @@ class NotaCompartida {
                     return null;
               }
           }
-        }
+        }*/
 
 
 

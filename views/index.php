@@ -54,7 +54,7 @@ $view->setVariable("nombre", "Nota");
 					<input type="hidden"  name="idNot" value = "<?php echo $nota->getIdNota() ?>">
 
 					<a href="index.php?controller=nota&action=modificarNota&id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" id="btnEditar"></span><?= i18n("Editar")?></button></a>
-					<a href="compartirNota.php?id=<?php echo $nota->getIdNota() ?>"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share" id="btnCompartir"></span><?= i18n("Compartir")?></button></a>
+					<a href="index.php?controller=notaCompartida&action=añadirUsuANota&id=<?php echo $nota->getIdNota() ?>"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share" id="btnCompartir"></span><?= i18n("Compartir")?></button></a>
 					<button type="submit" class="btn btn-default" form="borrar"><span class="glyphicon glyphicon-trash" id="btnEliminar"></span><?= i18n("Eliminar")?></button>
 
 					<form method= "post" action = "index.php?controller=nota&action=deleteNota" id="borrar">

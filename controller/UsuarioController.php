@@ -52,8 +52,10 @@ class UsuarioController extends BaseController{
     } // FIN GET usuario*/
 
 
-    public static function registro() {
-      if(!isset($_SESSION)) session_start();
+    public function registro() {
+
+
+      if(isset($_POST["submit"])){
 
       $login = $_POST['logUsuario'];
       $email = $_POST['emailUsuario'];
@@ -78,10 +80,7 @@ class UsuarioController extends BaseController{
 
         $this->view->render("views", "index");
       }
-
-      // Put the User object visible to the view
-  		$this->view->setVariable("usuario", $usuario);
-
+    }
   		// render the view (/view/users/register.php)
   		$this->view->render("views", "registro");
 
@@ -133,16 +132,10 @@ class UsuarioController extends BaseController{
 
 
     	public static function logout() {
-    		/*if(!isset($_SESSION)) session_start();
-    		session_unset();
-    		session_destroy();
-    		// redireccionamos
-    		ViewManager::getInstance()->render("usuario", "index");
-    		die();*/
 
         session_destroy();
 
-    		 ViewManager::getInstance()->render("users", "index");
+    		 ViewManager::getInstance()->redirect("nota", "index");
       }
 
 

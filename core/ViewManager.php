@@ -240,7 +240,7 @@ class ViewManager {
 	* @param string $viewname Name of the view
 	* @return void
 	*/
-	public function render($controller, $viewname) {
+	public function render($controller,$viewname) {
 		include(__DIR__."/../views/$viewname.php");
 		$this->renderLayout();
 	}

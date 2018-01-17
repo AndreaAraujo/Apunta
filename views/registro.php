@@ -13,7 +13,7 @@ $view->setVariable("title", "Register");
     <div class="container" id="login">
       <center>
 
-				<form action="index.php?controller=users&action=registro" method="post" class ="formulario" role = "form">
+				<form action="index.php?controller=usuario&action=registro" method="post" class ="formulario" role = "form">
 
 					<label for = "logUsuario"><?= i18n("Nombre de usuario")?>:</label>
 					<input type="text" name="logUsuario">
@@ -27,9 +27,9 @@ $view->setVariable("title", "Register");
 					<label for = "confirmar"><?= i18n("Confirmar contraseña")?>:</label>
           <input type="password" name="confirmar" maxlength="8"><br><br>
 
-					<input type="submit" name="enviar" value = <?= i18n("Registrar")?>>
+					<input type="submit" name="submit" value = <?= i18n("Registrar")?>>
 
-					<a href="../index.php" id="reg"><?= i18n("Atrás")?></a>
+					<a href="index.php?controller=nota&action=index" id="reg"><?= i18n("Atrás")?></a>
         </form>
       </center>
     </div>

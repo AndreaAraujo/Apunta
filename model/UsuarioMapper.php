@@ -54,17 +54,18 @@ class UsuarioMapper{
 
   /*Cogemos todos los datos del usuario    buscandolo por su ID de lla nota*/
 public static function obtenerUsuario($idNota){
-  global $connect;
-  $resultado = mysqli_query($connect,   "SELECT * FROM usuario  WHERE IdUsuario = ( SELECT Usuario_idUsuario FROM nota  WHERE IdNota=\"$idNota\")");
+  $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM usuario  WHERE IdUsuario = ( SELECT Usuario_idUsuario FROM nota  WHERE IdNota= ? )");
+  $stmt->execute(array($idNota));
 
-  if (mysqli_num_rows($resultado) > 0) {
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      $row = mysqli_fetch_assoc($resultado);
+  if($row != null) {
+
     $usuario= new Usuario($row['IdUsuario'],$row['login'],$row['password'],$row['email']);
-      return $usuario;
-  } else {
+    return $usuario;
 
-      return NULL;
+  } else {
+    return NULL;
   }
 }
 
@@ -144,14 +145,19 @@ public static function obtenerUsuario($idNota){
 
      /*Obtener idUsuario a partir del email*/
      public static function getUsuario($email){
-       global $connect;
-         $resultado = mysqli_query($connect, 'SELECT * FROM usuario  WHERE email = "'.$email.'"');
-         if (mysqli_num_rows($resultado) > 0) {
-             $row = mysqli_fetch_assoc($resultado);
-             return $row;
-         } else {
-             return NULL;
-         }
+
+        $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM usuario  WHERE email =? ");
+        $stmt->execute(array($email));
+
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($row != null) {
+          $usuario= new Usuario($row['IdUsuario'],$row['login'],$row['password'],$row['email']);
+          return $usuario;
+        } else {
+          return NULL;
+        }
      }
 
 

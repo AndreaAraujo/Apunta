@@ -3,7 +3,7 @@ require_once(__DIR__."/../core/ViewManager.php");
 
 
 $view = ViewManager::getInstance();
-$currentuser = $view->getVariable("currentusername");
+$idUsuario = $view->getVariable("currentusername");
 ?>
 
 	<div id="main-content" >
@@ -31,7 +31,7 @@ $currentuser = $view->getVariable("currentusername");
             <input type="submit" name="submit" value="Guardar">-->
 
 
-          <a href="verNotas.php"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
+          <a href="index.php?controller=nota&action=index"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
 
     </form>
 	  </div>

@@ -1,19 +1,28 @@
 <?php
-require_once(__DIR__."/../conexion/bdConexion.php");
+require_once(__DIR__."/../core/PDOConnection.php");
 require_once(__DIR__."/../model/NotaMapper.php");
 require_once(__DIR__."/../model/Nota.php");
 require_once(__DIR__."/../model/NotaCompartida.php");
+require_once(__DIR__."/../model/NotaCompartidaMapper.php");
 require_once(__DIR__."/../core/I18n.php");
 
-class NotaCompartidaController{
+require_once(__DIR__."/../core/ViewManager.php");
+require_once(__DIR__."/../controller/BaseController.php");
+require_once(__DIR__."/../controller/UsuarioController.php");
+
+class NotaCompartidaController extends BaseController{
+
+
+
+      public function verMisNotasCompartidas() {
+
+    		ViewManager::getInstance()->render("nota", "misNotasCompartidas");
+    	}
 
             /*Devolver datos de la NotaCompartida*/
 
-            public static function getUsu_NotaCompartida($idNotaC){
-              if(!isset($_SESSION)) session_start();
+      public function getUsu_NotaCompartida($idNotaC){
 
-              $notaCompartida = NULL;
-              $notaCompartida = NotaCompartida::obtenerDatos($idNotaC);
 
               if ( NotaCompartidaMapper::esValidoNotaC($idNotaC)) {
 
@@ -21,26 +30,21 @@ class NotaCompartidaController{
               } else {
                     $notaCompartida = null;
               }
-
-
-              if ($notaCompartida == NULL){
-
-                return null;
-              }else{
                 return $notaCompartida;
-              }
+
             }
 
-            public static function añadirUsuANota(){
+      public function añadirUsuANota(){
 
-              if(!isset($_SESSION)) session_start();
+        if (isset($_POST["submit"])) {
+              //if(!isset($_SESSION)) session_start();
               $idUsuario = $_POST['idusu'];
               $idNotaC = $_POST['idNotC'];
-            if(Nota::comprobarNota_Usuario($idNotaC,$idUsuario)){
+
+            if(NotaMapper::notaByUsuario($idNotaC,$idUsuario)){
 
 
               $email = $_POST['email'];
-
               $idNotaC = $_POST['idNotC'];
               if(NotaCompartida::emailValido($email,$idNotaC)){
 
@@ -48,25 +52,25 @@ class NotaCompartidaController{
 
                 $notaC->setIdNotaCompartida($idNotaC);
                 $usuario=UsuarioController::getUsuario($email);
-                $idUsu = $usuario['IdUsuario'];
+                $idUsu = $usuario->getIdUsuario();
                 $notaC->setIdUsu($idUsu);
 
                 $notaC->guardarNuevoUsuarioCompartido($notaC);
 
 
-               header("Location: ../views/compartirNota.php?id=$idNotaC ");
+               ViewManager::getInstance()->render("notaCompartida", "compartirNota");
              }else{
 
-                $error= i18n("Ese email no es válido");
-                header("Location: ../views/error.php?error=$error");
+                throw new Exception("Ese email no es válido");
 
              }
 
            }else{
-             $error = "No puedes compartir esta nota";
-               header("Location: ../views/error.php?error=$error");
-
+             throw new Exception("No puedes compartir esta nota");
            }
+         }
+         ViewManager::getInstance()->render("notaCompartida", "compartirNota");
+
         }
 
 
@@ -77,8 +81,8 @@ class NotaCompartidaController{
           $notaCompartida = NULL;
           $notaCompartida = NotaCompartida::obtenerDatos($idNotaC);
           if ($notaCompartida == NULL){
-           $error = "No existe la nota ";
-            header("Location: ../views/error.php?error=$error");
+             throw new Exception("No existe la nota");
+
           }else{
             return $notaCompartida;
           }
@@ -104,7 +108,7 @@ class NotaCompartidaController{
               $idNota= $_POST['idNot'];
               NotaCompartida::descompartirN($idUsuario,$idNota);
 
-              header("Location: ../views/verNotas.php");
+              $this->view->render("notaCompartida", "misNotasCompartidas");
 
 
         }

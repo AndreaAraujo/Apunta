@@ -2,11 +2,13 @@
 <?php
 require_once(__DIR__."/../core/ViewManager.php");
 
-if(!isset($_SESSION)) session_start();
- $idUsuario=$_SESSION['IdUsuario'];
+//if(!isset($_SESSION)) session_start();
+$idNota = $_POST['id'];
+
+$view = ViewManager::getInstance();
+$idUsuario = $view->getVariable("currentusername");
 
 
-  $idNota = $_GET['id'];
   $nota = NotaController::getNota($idNota,$idUsuario);
 
 ?>
@@ -16,7 +18,7 @@ if(!isset($_SESSION)) session_start();
 			<h1><p align= center><?= i18n("EDITAR NOTA")?>: <span id ="titulo"><?php echo $nota->getNombre();?></span></h1>
 
 			<div class="container">
-      	<form action="../controller/defaultController.php?controlador=nota&accion=modificarNota" method="post" class ="formularioEditar" role = "form">
+      	<form action="index.php?controller=nota&action=modificarNota" method="post" class ="formularioEditar" role = "form">
 					<div class ="form-group">
 		  			<label for = "nombre" id="labelNombre"><?= i18n("Nombre")?>:</label>
 		  			<input type="text" name="Nombre" class ="form-control"  id="textBoxNombre" placeholder="<?php echo $nota->getNombre();?>">
@@ -29,7 +31,7 @@ if(!isset($_SESSION)) session_start();
           <input type="hidden" name="idNot" value="<?php echo $nota->getIdNota();?>">
           <input type="hidden" name="idusu" value="<?php echo  $idUsuario ?>">
 
-          <button type="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-paperclip" id="btnGuardar"></span><?= i18n("Guardar")?></button>
+          <button type="submit" name = "submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-paperclip" id="btnGuardar"></span><?= i18n("Guardar")?></button>
 					<a href="verNotas.php"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
 
         </form>

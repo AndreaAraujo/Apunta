@@ -1,10 +1,12 @@
 <?php
 require_once(__DIR__."/../core/ViewManager.php");
+require_once(__DIR__."/../controller/NotaController.php");
+require_once(__DIR__."/../controller/NotaCompartidaController.php");
 
-if(!isset($_SESSION)) session_start();
 
-      $idUsuario=$_SESSION['IdUsuario'];
-      $idNotaC = $_GET['id'];
+$view = ViewManager::getInstance();
+$idUsuario = $view->getVariable("currentusername");
+      $idNotaC =51;// $_GET['id'];
 //  $idUsuario = $_GET['id2'];
 
       $nota = NotaController::getNota($idNotaC, $idUsuario);
@@ -18,17 +20,16 @@ if(!isset($_SESSION)) session_start();
     <div class="container">
 
 
-
-   <form action="../controller/defaultController.php?controlador=notaCompartida&accion=añadirUsuANota"  method="post" class="form-horizontal" role = "form">
+   <form action="index.php?controller=notaCompartida&action=añadirUsuANota"  method="post" class="form-horizontal" role = "form">
 
         <div class ="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class = "form-group">
           <label for = "compartirCon" ><?= i18n("Compartir con")?>:</label>
 
-            <input type = "hidden" name="idusu" value="<?php echo $idUsuario ?>">
+          <input type = "hidden" name="idusu" value="<?php echo $idUsuario ?>">
           <input type="text" name="email" class ="form-control" id="textBoxCompartirCon" placeholder="email" maxlength="50" >
-          <button type="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-share" id="btnCompartir"></span> <?= i18n("Compartir")?></button>
-        <a href="verNotas.php"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
+          <button type="submit" name="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-share" id="btnCompartir"></span> <?= i18n("Compartir")?></button>
+          <a href="index.php?controller=nota&action=index"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
 
           <input type="hidden" name="idNotC" value="<?php echo $idNotaC;?>">
           </div>
@@ -61,7 +62,7 @@ if(!isset($_SESSION)) session_start();
 
 
              <tr>
-                <td><?php echo $notaCompartida['email']; ?></td>
+                <td><?php echo $notaCompartida->getEmail() ?></td>
                 <td><a href=""><button type="submit" class="btn btn-default" name="email" form="borrar" ><span class="glyphicon glyphicon-trash" id="btnEliminar"></span><?= i18n("Eliminar")?></button></a>
 
               </tr>
@@ -71,10 +72,10 @@ if(!isset($_SESSION)) session_start();
                }
              }
              ?>
-             <form method= "post" action = "../controller/defaultController.php?controlador=notaCompartida&accion=borrarUsuCompartido" id="borrar">
-                 <input type="hidden"  name="email" value ="<?php echo $notaCompartida['email']?>">
+             <form method= "post" action = "index.php?controller=notaCompartida&action=borrarUsuCompartido" id="borrar">
+                 <input type="hidden"  name="email" value ="<?php echo $notaCompartida->getEmail() ?>">
 
-                    <input type="hidden"  name="id" value ="<?php echo $idNotaC?>">
+                    <input type="hidden"  name="id" value ="<?php echo $idNotaC ?>">
              </form>
 
            </tbody>

@@ -8,6 +8,7 @@ require_once(__DIR__."/../core/I18n.php");
 
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../controller/BaseController.php");
+require_once(__DIR__."/../controller/UsuarioController.php");
 
 class NotaController extends BaseController{
 
@@ -21,13 +22,6 @@ class NotaController extends BaseController{
 
   public function index() {
 
-		// obtain the data from the database
-		$nota = $this->notaMapper->findAll();
-
-		// put the array containing Post object to the view
-		$this->view->setVariable("nota", $nota);
-
-		// render the view (/view/posts/index.php)
 		$this->view->render("nota", "index");
 	}
 
@@ -47,7 +41,7 @@ class NotaController extends BaseController{
 
         $nombre = $_POST['nomNota'];
         $contenido = $_POST['contenidoNota'];
-        $idUsuario = $_POST['idUsu'];//$_POST['idUsu'];
+        $idUsuario = $_POST['idUsu'];
 
         //Comprobamos si los datos introducidos son Correctos
         if(Nota::registroValido($nombre,$contenido)){
@@ -57,11 +51,11 @@ class NotaController extends BaseController{
 
           $nota->setNombre($nombre);
           $nota->setContenido($contenido);
-          $nota->setUsuario_idUsuario($idUsu);
+          $nota->setUsuario_idUsuario($idUsuario);
 
           NotaMapper::guardarNota($nota);
 
-            ViewManager::getInstance()->render("users", "index");
+          ViewManager::getInstance()->redirect("nota", "index");
         }
       }
 
@@ -76,11 +70,9 @@ class NotaController extends BaseController{
 
     /* GET nota*/
   public static function getNota($idNota,$idUsuario){
-      if(!isset($_SESSION)) session_start();
+
 
       if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
-
-          $nota = NULL;
 
           if ( NotaMapper::esValidoNota($idNota)) {
 
@@ -111,48 +103,51 @@ class NotaController extends BaseController{
 
     /*MODIFICAR NOTA*/
   public function modificarNota(){
-    //  if(!isset($_SESSION)) session_start();
+        //  if(!isset($_SESSION)) session_start();
+      if (isset($_POST["submit"])) {
+          $idNota = $_POST["idNot"];
+          $idUsuario =  $_POST["idusu"];
 
-      $idNota = $_REQUEST["id"];
-      $idUsuario = $this->currentUser;
+      //if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
 
-  //if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
-
-        $contenido=$_POST['contenidoNota'];
-        //Utilizamos la nota sin modificar por si no nos pasan unos argumentos, asignarle los que ya tenía
-        if (NotaMapper::esValidoNota($idNota)) {
+            $contenido=$_POST['contenidoNota'];
+            //Utilizamos la nota sin modificar por si no nos pasan unos argumentos, asignarle los que ya tenía
+            if (NotaMapper::esValidoNota($idNota)) {
 
                 $notaSinModificar = NotaMapper::findByIdNota($idNota);
-        } else {
-                $notaSinModificar = NULL;
-        }
 
-        //Si no pasan nombre, cogemos el nombre que ya tenia
-        if ($_POST['Nombre']!= null) {
-          $nombre = $_POST['Nombre'];
-        }else{
-          $nombre = $notaSinModificar->getNombre();
-        }
-        //Si no pasan contenido, cogemos elcontenido que ya tenia
-        if ($_POST['contenidoNota']!= null) {
-          $contenido = $_POST['contenidoNota'];
-        }else{
-          $contenido = $notaSinModificar->getContenido();
-        }
-
-          //Comprobamos si los datosintroducidos son Correctos
-          if(Nota::registroValido($nombre,$contenido)){
-
-              //Llamamos a la funcion que modifica la Nota
-              $nota = NotaMapper::update($idNota, $nombre,$contenido);
-              ViewManager::getInstance()->render("users", "index");
+            } else {
+                    $notaSinModificar = NULL;
             }
-        /*  }else{
-            throw new Exception("No puedes modificar esta nota");
-            /*$error = "No puedes modificar esta nota";
-              header("Location: ../views/error.php?error=$error");*/
 
-        //  }
+            //Si no pasan nombre, cogemos el nombre que ya tenia
+            if ($_POST['Nombre']!= null) {
+              $nombre = $_POST['Nombre'];
+            }else{
+              $nombre = $notaSinModificar->getNombre();
+            }
+            //Si no pasan contenido, cogemos elcontenido que ya tenia
+            if ($_POST['contenidoNota']!= null) {
+              $contenido = $_POST['contenidoNota'];
+            }else{
+              $contenido = $notaSinModificar->getContenido();
+            }
+
+              //Comprobamos si los datosintroducidos son Correctos
+              if(Nota::registroValido($nombre,$contenido)){
+
+                  //Llamamos a la funcion que modifica la Nota
+                  $nota = NotaMapper::update($idNota, $nombre,$contenido);
+                  ViewManager::getInstance()->render("users", "index");
+                }
+            /*  }else{
+                throw new Exception("No puedes modificar esta nota");
+                /*$error = "No puedes modificar esta nota";
+                  header("Location: ../views/error.php?error=$error");*/
+
+            //  }
+          }
+            ViewManager::getInstance()->render("users", "editarNota");
       }
 
 /*

@@ -102,7 +102,9 @@ public static function registroValido($nombre,$contenido){
 
     if (sizeof($errors) > 0){
       throw new ValidationException($errors, "Nota no valida");
+      return false;
     }
+    return true;
 }
 
 public static function notasBuscadas($nombre) {
