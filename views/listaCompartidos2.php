@@ -49,5 +49,5 @@ $idUsuario = $view->getVariable("currentusername");
 
         </div>
     </div>
-    <a href="misNotasCompartidas.php"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
+    <a href="index.php?controller=nota&action=index"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
 </div>
