@@ -6,7 +6,7 @@ require_once(__DIR__."/../controller/NotaCompartidaController.php");
 
 $view = ViewManager::getInstance();
 $idUsuario = $view->getVariable("currentusername");
-      $idNotaC =44;// $_GET['id'];
+      $idNotaC =$_GET['id'];
 //  $idUsuario = $_GET['id2'];
 
       $nota = NotaController::getNota($idNotaC, $idUsuario);
@@ -75,7 +75,7 @@ $idUsuario = $view->getVariable("currentusername");
              <form method= "post" action = "index.php?controller=notaCompartida&action=borrarUsuCompartido" id="borrar">
                  <input type="hidden"  name="email" value ="<?php echo $notaCompartida->getEmail() ?>">
 
-                    <input type="hidden"  name="id" value ="<?php echo $idNotaC ?>">
+                    <input type="hidden"  name="idc" value ="<?php echo $idNotaC ?>">
              </form>
 
            </tbody>

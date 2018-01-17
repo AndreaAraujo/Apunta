@@ -82,9 +82,9 @@ class NotaCompartida {
         public static function delete($idNotaC){
             NotaCompartidaMapper::delete($idNotaC);
         }
-        public static function deleteUsu($email){
+    /*    public static function deleteUsu($email){
             NotaCompartidaMapper::deleteUsu($email);
-        }
+        }*/
 
         public static function descompartirN($idUsuario,$idNota){
             NotaCompartidaMapper::descompartirN($idUsuario,$idNota);

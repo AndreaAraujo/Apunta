@@ -107,7 +107,7 @@ class NotaCompartidaMapper{
 
        }
 
-       public static function deleteUsu($email){
+       public function deleteUsu($email){
          $stmt = PDOConnection::getInstance()->prepare("DELETE FROM notas_compartidas WHERE idUsu=(SELECT IdUsuario FROM usuario WHERE email= ?)");
          $stmt->execute(array($email));
 

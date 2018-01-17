@@ -3,7 +3,7 @@
 require_once(__DIR__."/../core/ViewManager.php");
 
 //if(!isset($_SESSION)) session_start();
-$idNota = $_POST['id'];
+$idNota = $_GET['id'];
 
 $view = ViewManager::getInstance();
 $idUsuario = $view->getVariable("currentusername");
@@ -32,7 +32,7 @@ $idUsuario = $view->getVariable("currentusername");
           <input type="hidden" name="idusu" value="<?php echo  $idUsuario ?>">
 
           <button type="submit" name = "submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-paperclip" id="btnGuardar"></span><?= i18n("Guardar")?></button>
-					<a href="verNotas.php"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
+					<a href="index.php?controller=nota&action=index"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-circle-arrow-left"><?= i18n("Atrás")?></button></span></a></p>
 
         </form>
 	  	</div>

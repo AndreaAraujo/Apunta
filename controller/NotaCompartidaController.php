@@ -19,6 +19,7 @@ class NotaCompartidaController extends BaseController{
     		ViewManager::getInstance()->render("nota", "misNotasCompartidas");
     	}
 
+
             /*Devolver datos de la NotaCompartida*/
 
       public function getUsu_NotaCompartida($idNotaC){
@@ -111,10 +112,11 @@ class NotaCompartidaController extends BaseController{
         public static function borrarUsuCompartido(){
 
               $email = $_POST['email'];
-              $idNota= $_POST['id'];
-                NotaCompartida::deleteUsu($email);
-                //Redireccionamos a vista
-            header("Location: ../views/compartirNota.php?id=$idNota");
+              //$idNota= $_POST['idc'];
+              die($email);
+              NotaCompartidaMapper::deleteUsu($email);
+
+            ViewManager::getInstance()->render("notaCompartida", "index");
 
 
         }
