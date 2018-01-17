@@ -97,6 +97,7 @@ class Usuario {
           $errores["email"] = "Este email no está disponible";
             $error = i18n("Este email no está disponible");
             header("Location: ../views/error.php?error=$error");
+
           return false;
        }
 
@@ -111,18 +112,21 @@ class Usuario {
             $errores ["email"]= i18n("La dirección de email introducida no es válida");
           /*  $error= i18n("La dirección de email introducida no es válida");
             header("Location: ../views/error.php?error=$error");*/
+
           }
 
           if (strlen($password) < 5) {
             $errores["password"] = i18n("La contraseña debe tener al menos 5 caracteres");
           /*  $error= i18n("La contraseña debe tener al menos 5 caracteres");
             header("Location: ../views/error.php?error=$error");*/
+          
           }
 
           if ($password!=$confirmar) {
               $errores["confirmar"]= i18n("Las contraseñas no coinciden. Por favor, inténtelo de nuevo");
               //  $error= i18n("Las contraseñas no coinciden. Por favor, inténtelo de nuevo");
             //  header("Location: ../views/error.php?error=$error");
+
           }
 
 
@@ -130,6 +134,7 @@ class Usuario {
       		//	throw new ValidationException($errores, "usuario no valido");
             return false;
       		}
+          return true;
       }
 
 

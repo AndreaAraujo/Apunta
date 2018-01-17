@@ -2,7 +2,6 @@
 <?php
 require_once(__DIR__."/../core/ViewManager.php");
 
-require_once(__DIR__."/../core/ViewManager.php");
 
 
   $view = ViewManager::getInstance();
@@ -39,7 +38,7 @@ require_once(__DIR__."/../core/ViewManager.php");
 
 
         <a href="index.php?controller=nota&action=modificarNota&id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" id="btnEditar"></span><?= i18n("Editar")?></button></a>
-        <a href="compartirNota.php?id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share" id="btnCompartir"></span> <?= i18n("Compartir")?></button></a>
+        <a href="index.php?controller=notaCompartida&action=añadirUsuANota&id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share" id="btnCompartir"></span> <?= i18n("Compartir")?></button></a>
         <button type="submit" class="btn btn-default" form="borrar"><span class="glyphicon glyphicon-trash" id="btnEliminar"></span><?= i18n("Eliminar")?></button>
 
         <form method= "post" action = "index.php?controller=notaCompartida&action=descompartirNota" id="borrar">
@@ -49,7 +48,7 @@ require_once(__DIR__."/../core/ViewManager.php");
 
 
 
-      <a href="listaCompartidos2.php?id=<?php echo $nota['IdNota']; ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user" id="btnCompartir"></span><?= i18n("Compartido")?></button></a>
+      <a href="index.php?controller=notaCompartida&action=listarCompartido2&id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user" id="btnCompartir"></span><?= i18n("Compartido")?></button></a>
 
 
 

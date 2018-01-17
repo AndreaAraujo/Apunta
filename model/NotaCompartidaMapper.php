@@ -10,18 +10,21 @@ class NotaCompartidaMapper{
     $this->db = PDOConnection::getInstance();
   }
 
-  public static function findByIdNotaC($idNotaC){
+  public  function findByIdNotaC($idNotaC){
 
     $stmt = PDOConnection::getInstance()->prepare("SELECT U.email FROM notas_compartidas C, usuario U WHERE C.idUsu = U.idUsuario and  idNota= ?");
     $stmt->execute(array($idNotaC));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $usu_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if($row != null) {
+    $usuarios = array();
 
-      $usuario= $row['email'];
-      return $usuario;
-    } else {
-      return NULL;
+    foreach ($usu_db as $usuario) {
+
+      array_push($usuarios, new Usuario($usuario["email"]));
+
+
+    }
+    return $usuarios;
     }
     /*
       global $connect;
@@ -29,9 +32,9 @@ class NotaCompartidaMapper{
 
           return $resultado;
 */
-  }
 
-  public static function devolverNotaC($idNotaC){
+
+  public function devolverNotaC($idNotaC){
 
     $stmt = PDOConnection::getInstance()->prepare("SELECT * FROM notas_compartidas WHERE idNota= ?");
     $stmt->execute(array($idNotaC));

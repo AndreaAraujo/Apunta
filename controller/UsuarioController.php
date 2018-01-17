@@ -61,7 +61,7 @@ class UsuarioController extends BaseController{
       $email = $_POST['emailUsuario'];
       $password = md5($_POST['conUsuario']);
       $confirmar= md5($_POST['confirmar']);
-      $idUsuario = "NULL";
+    //  $idUsuario = "NULL";
 
 
       //Comprobamos si los datos introducidos son correctos
@@ -78,7 +78,7 @@ class UsuarioController extends BaseController{
 
         UsuarioMapper::guardarUsuario($usuario);
 
-        $this->view->render("views", "index");
+        $this->view->redirect("nota", "index");
       }
     }
   		// render the view (/view/users/register.php)

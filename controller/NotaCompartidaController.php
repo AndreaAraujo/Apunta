@@ -27,12 +27,29 @@ class NotaCompartidaController extends BaseController{
               if ( NotaCompartidaMapper::esValidoNotaC($idNotaC)) {
 
                       $notaCompartida = NotaCompartidaMapper::findByIdNotaC($idNotaC);
+
               } else {
+
                     $notaCompartida = null;
               }
                 return $notaCompartida;
 
             }
+
+        public function listarCompartido1(){
+
+           ViewManager::getInstance()->render("notaCompartida", "listaCompartidos");
+         }
+         public function listarCompartido2(){
+
+            ViewManager::getInstance()->render("notaCompartida", "listaCompartidos2");
+          }
+
+
+        public function listar(){
+
+           ViewManager::getInstance()->render("notaCompartida", "compartirNota");
+        }
 
       public function añadirUsuANota(){
 
@@ -58,7 +75,7 @@ class NotaCompartidaController extends BaseController{
                 $notaC->guardarNuevoUsuarioCompartido($notaC);
 
 
-               ViewManager::getInstance()->render("notaCompartida", "compartirNota");
+               ViewManager::getInstance()->redirect("notacompartida", "listar");
              }else{
 
                 throw new Exception("Ese email no es válido");
@@ -108,7 +125,7 @@ class NotaCompartidaController extends BaseController{
               $idNota= $_POST['idNot'];
               NotaCompartida::descompartirN($idUsuario,$idNota);
 
-              $this->view->render("notaCompartida", "misNotasCompartidas");
+              ViewManager::getInstance()->render("notaCompartida", "misNotasCompartidas");
 
 
         }

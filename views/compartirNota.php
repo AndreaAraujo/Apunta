@@ -6,7 +6,7 @@ require_once(__DIR__."/../controller/NotaCompartidaController.php");
 
 $view = ViewManager::getInstance();
 $idUsuario = $view->getVariable("currentusername");
-      $idNotaC =51;// $_GET['id'];
+      $idNotaC =44;// $_GET['id'];
 //  $idUsuario = $_GET['id2'];
 
       $nota = NotaController::getNota($idNotaC, $idUsuario);

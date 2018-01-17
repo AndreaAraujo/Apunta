@@ -72,7 +72,7 @@ public static function obtenerUsuario($idNota){
 
   /* Guardamos una usuario en la BD*/
     public  function guardarUsuario($usuario){
-      $stmt = $this->db->prepare("INSERT INTO usuario (login, password, email)VALUES(?,?,?)");
+      $stmt = PDOConnection::getInstance()->prepare("INSERT INTO usuario (login, password, email)VALUES(?,?,?)");
       $stmt->execute(array($usuario->getLogin(), $usuario->getPassword(),$usuario->getEmail()));
 
     }

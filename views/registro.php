@@ -1,4 +1,4 @@
-<?php
+v<?php
 //file: view/users/register.php
 
 require_once(__DIR__."/../core/ViewManager.php");

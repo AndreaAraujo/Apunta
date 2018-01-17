@@ -3,6 +3,7 @@
 
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../controller/UsuarioController.php");
+require_once(__DIR__."/../controller/NotaCompartidaController.php");
 $view = ViewManager::getInstance();
 
 $notas = $view->getVariable("nota");
@@ -40,7 +41,7 @@ $view->setVariable("nombre", "Nota");
 				if($row!=null){
 					foreach ($row as $nota) {
 						$idNota  = $nota->getIdNota();
-						$rowCompartir= null;//NotaCompartidaController::getUsu_NotaCompartida($idNota);
+						$rowCompartir= NotaCompartidaController::getUsu_NotaCompartida($idNota);
 				?>
 
 				<div class="col-md-4">
@@ -67,7 +68,7 @@ $view->setVariable("nombre", "Nota");
 					if($rowCompartir!=null){
 					?>
 
-						<a href="listaCompartidos.php?id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user" id="btnUser"></span><?= i18n("Compartido")?></button></a>
+						<a href="index.php?controller=notaCompartida&action=listarCompartido1&id=<?php echo $nota->getIdNota() ?> "><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user" id="btnUser"></span><?= i18n("Compartido")?></button></a>
 
 
 				<?php

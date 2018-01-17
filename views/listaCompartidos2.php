@@ -1,8 +1,10 @@
 <?php
 require_once(__DIR__."/../core/ViewManager.php");
+require_once(__DIR__."/../controller/NotaController.php");
+require_once(__DIR__."/../controller/NotaCompartidaController.php");
 
-if(!isset($_SESSION)) session_start();
- $idUsuario=$_SESSION['IdUsuario'];
+$view = ViewManager::getInstance();
+$idUsuario = $view->getVariable("currentusername");
 
 
       $idNotaC = $_GET['id'];
@@ -35,7 +37,7 @@ if(!isset($_SESSION)) session_start();
                foreach ($row as $notaCompartida) {
              ?>
              <tr>
-               <td><?php echo $notaCompartida['email']; ?></td>
+               <td><?php echo $notaCompartida->getEmail() ?></td>
 
 
              <?php
