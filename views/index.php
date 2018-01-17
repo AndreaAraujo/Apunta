@@ -13,7 +13,7 @@ $currentuser = $view->getVariable("currentusername");
 $view->setVariable("nombre", "Nota");
 */
 
-?><h1><?=i18n("notaaas")?></h1>
+?>
 
 <div>
 
@@ -25,7 +25,7 @@ $view->setVariable("nombre", "Nota");
 	  $rowC = UsuarioController::getNotasUsuarioCompartidas($currentuser);
 ?>
 
-	<div id="main-content" >
+	<div id="main-content"  >
 		<h1><p align= center><?= i18n("MIS NOTAS")?></h1>
 		<div class="container">
 

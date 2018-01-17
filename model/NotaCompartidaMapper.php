@@ -26,12 +26,6 @@ class NotaCompartidaMapper{
     }
     return $usuarios;
     }
-    /*
-      global $connect;
-      $resultado = mysqli_query($connect,  "SELECT U.email FROM notas_compartidas C, usuario U WHERE C.idUsu = U.idUsuario and  idNota=\"$idNotaC\"");
-
-          return $resultado;
-*/
 
 
   public function devolverNotaC($idNotaC){

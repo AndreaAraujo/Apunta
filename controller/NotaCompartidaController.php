@@ -55,7 +55,7 @@ class NotaCompartidaController extends BaseController{
       public function añadirUsuANota(){
 
         if (isset($_POST["submit"])) {
-              //if(!isset($_SESSION)) session_start();
+
               $idUsuario = $_POST['idusu'];
               $idNotaC = $_POST['idNotC'];
 
@@ -112,7 +112,7 @@ class NotaCompartidaController extends BaseController{
         public static function borrarUsuCompartido(){
 
               $email = $_POST['email'];
-              //$idNota= $_POST['idc'];
+
               die($email);
               NotaCompartidaMapper::deleteUsu($email);
 
@@ -128,7 +128,6 @@ class NotaCompartidaController extends BaseController{
               NotaCompartida::descompartirN($idUsuario,$idNota);
 
               ViewManager::getInstance()->render("notaCompartida", "misNotasCompartidas");
-
 
         }
 

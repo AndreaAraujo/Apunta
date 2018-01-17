@@ -150,7 +150,7 @@ public static function findActBySearch($nombre){
 public static function update($idNota,$nombre,$contenido)
   {
     $stmt = PDOConnection::getInstance()->prepare("UPDATE nota SET nombre=?, contenido =? WHERE idNota=? ");
-    $stmt->execute(array($idNota,$nombre,$contenido));
+    $stmt->execute(array($nombre,$contenido,$idNota));
       /*global $connect;
       $resultado = mysqli_query($connect, "UPDATE nota SET nombre=\"$nombre\", contenido =\"$contenido\" WHERE idNota=\"$idNota\"");
       return $resultado;*/

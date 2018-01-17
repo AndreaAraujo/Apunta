@@ -108,10 +108,10 @@ class NotaController extends BaseController{
           $idNota = $_POST["idNot"];
           $idUsuario =  $_POST["idusu"];
 
-      //if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
+      if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
 
             $contenido=$_POST['contenidoNota'];
-            //Utilizamos la nota sin modificar por si no nos pasan unos argumentos, asignarle los que ya tenía
+
             if (NotaMapper::esValidoNota($idNota)) {
 
                 $notaSinModificar = NotaMapper::findByIdNota($idNota);
@@ -140,12 +140,9 @@ class NotaController extends BaseController{
                   $nota = NotaMapper::update($idNota, $nombre,$contenido);
                   ViewManager::getInstance()->render("users", "index");
                 }
-            /*  }else{
+            }else{
                 throw new Exception("No puedes modificar esta nota");
-                /*$error = "No puedes modificar esta nota";
-                  header("Location: ../views/error.php?error=$error");*/
-
-            //  }
+             }
           }
             ViewManager::getInstance()->render("users", "editarNota");
       }
@@ -190,9 +187,6 @@ class NotaController extends BaseController{
                       ViewManager::getInstance()->render("users", "index");
                 }else{
                   	throw new Exception("No puedes eliminar esta nota");
-                      /*  $error = "No puedes eliminar esta nota";
-                        header("Location: ../views/error.php?error=$error");
-*/
                   }
               }
 
