@@ -22,15 +22,6 @@ class UsuarioMapper{
     if ($stmt->fetchColumn() > 0) {
       return true;
     }
-
-    /*
-      global $connect;
-      $resultado = mysqli_query($connect, "SELECT * FROM usuario WHERE login=\"$login\"");
-      $busqueda = mysqli_num_rows($resultado);
-      if( $busqueda > 0) {
-
-          return true;
-      }*/
   }
 
   /*Buscamos si existe un Usuario por su email, devolvemos true si existe*/
@@ -42,14 +33,6 @@ class UsuarioMapper{
     if ($stmt->fetchColumn() > 0) {
       return true;
     }
-
-    /*  global $connect;
-      $resultado = mysqli_query($connect, "SELECT * FROM usuario WHERE email=\"$email\"");
-      $busqueda = mysqli_num_rows($resultado);
-      if( $busqueda > 0) {
-
-          return true;
-      }*/
   }
 
   /*Cogemos todos los datos del usuario    buscandolo por su ID de lla nota*/
@@ -126,21 +109,18 @@ public static function obtenerUsuario($idNota){
      /*Buscamos las notas compartidas por el usuario*/
      public  function getNotasCompartidas($idUsuario){
 
+         $stmt = PDOConnection::getInstance()->prepare("SELECT N.IdNota , N.nombre , N.contenido FROM nota N , notas_compartidas C  WHERE C.idUsu= ? AND  N.IdNota = C.idNota ");
+         $stmt->execute(array($idUsuario));
+         $notasC_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-             $stmt = PDOConnection::getInstance()->prepare("SELECT N.IdNota , N.nombre , N.contenido FROM nota N , notas_compartidas C  WHERE C.idUsu= ? AND  N.IdNota = C.idNota ");
-             $stmt->execute(array($idUsuario));
-             $notasC_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+     		 $notasC = array();
 
-         		 $notasC = array();
+     		 foreach ($notasC_db as $notaC) {
 
-         		 foreach ($notasC_db as $notaC) {
+     	  		array_push($notasC, new Nota($notaC["IdNota"], $notaC["nombre"], $notaC["contenido"]));
+     	  	}
 
-         	  		array_push($notasC, new Nota($notaC["IdNota"], $notaC["nombre"], $notaC["contenido"]));
-         	  	}
-
-         	     return $notasC;
-
-
+     	     return $notasC;
      }
 
      /*Obtener idUsuario a partir del email*/

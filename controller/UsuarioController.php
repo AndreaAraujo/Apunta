@@ -79,12 +79,13 @@ class UsuarioController extends BaseController{
         UsuarioMapper::guardarUsuario($usuario);
 
         $this->view->redirect("nota", "index");
+      }else{
+          throw new Exception("Datos incorrectos");
       }
-    }
-  		// render the view (/view/users/register.php)
+    }else{
   		$this->view->render("views", "registro");
-
-    } //FIN Registrar Usuario*/
+    }
+    }
 
 
 

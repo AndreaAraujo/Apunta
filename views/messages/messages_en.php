@@ -54,6 +54,7 @@ array(
 	"No puedes compartir esta nota" => "You can not share this note",
 	"Usuario no valido" => "User not valid",
 	"Nota no valida" => "Note not valid",
-	"Mis notas" => "My notes"
+	"Mis notas" => "My notes",
+	"Datos incorrectos" => "Incorrect data"
 )
 ?>

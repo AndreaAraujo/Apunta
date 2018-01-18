@@ -20,10 +20,12 @@ class NotaCompartidaMapper{
 
     foreach ($usu_db as $usuario) {
 
+
       array_push($usuarios, new Usuario($usuario["email"]));
 
 
     }
+    
     return $usuarios;
     }
 

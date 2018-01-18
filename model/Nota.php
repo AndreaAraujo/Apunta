@@ -54,10 +54,6 @@ class Nota {
           return $resultado = NotaMapper::findAll();
       }
 
-      /* Guardamos una Nota en la BD*/
-    /*  public static function guardarNota($nota){
-        return NotaMapper::guardarNota($nota);
-      }*/
       /*Obtenemos datos de la nota por su nombre */
       public static function datosNota($nombre) {
         if ($nombre) {
@@ -67,22 +63,6 @@ class Nota {
             }
       }
 
-      /*Comprobacion existe nota... Si existe nota devuelve Objeto Nota*/
-      /*  public static function obtenerDatos($idNota) {
-          if ($idNota) {
-              if ($res = NotaMapper::esValidoNota($idNota)) {
-
-                      return NotaMapper::findByIdNota($idNota);
-              } else {
-                    return NULL;
-              }
-          } else {
-                  return NULL;
-          }
-        }*/
-
-
-
 
         /*Comprobamos si se puede registrar la Nota. Si se puede retornamos un TRUE*/
 public static function registroValido($nombre,$contenido){
@@ -91,17 +71,14 @@ public static function registroValido($nombre,$contenido){
 
     if (strlen(trim($nombre)) < 1 || strlen(trim($nombre)) > 50) {
      $errors["nombre"] = "El nombre de la Nota debe tener entre 3 y 50 caracteres";
-  //   $error = i18n("El nombre de la Nota debe tener entre 3 y 50 caracteres");
-  //  header("Location: ../views/error.php?error=$error");
+
     }
     if (strlen(trim($contenido)) < 1 || strlen(trim($contenido)) > 300) {
      $errors["contenido"] = "El contenido de la Nota debe tener entre 5 y 300 caracteres";
-    // $error = i18n("El contenido de la Nota debe tener entre 5 y 300 caracteres");
-    // header("Location: ../views/error.php?error=$error");
+
     }
 
     if (sizeof($errors) > 0){
-      throw new ValidationException($errors, "Nota no valida");
       return false;
     }
     return true;
@@ -115,31 +92,7 @@ public static function notasBuscadas($nombre) {
         }
   }
 
-/*
-  public static function update($idNota, $nombre, $contenido){
-     return NotaMapper::update($idNota, $nombre,$contenido);
-  }*/
-  /*
-  public static function delete($idNota){
-
-     NotaMapper::delete($idNota);
-
-  }*/
-
-/*
-  public static function comprobarNota_Usuario($idNota,$idUsuario){
-
-    return  NotaMapper::notaByUsuario($idNota,$idUsuario);
-
-}*/
-
-
-
-
-
 }
-
-
 
 
   ?>

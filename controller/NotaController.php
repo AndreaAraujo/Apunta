@@ -27,14 +27,14 @@ class NotaController extends BaseController{
 
 
   /*Obtenemos todos las notas*/
-      public static function getAll(){
+  public static function getAll(){
         if(!isset($_SESSION)) session_start();
         $notas = new Nota();
         return $notas->getAllNotas();
-      }
+    }
 
   /*CREAR NOTA*/
-      public static function crearNota(){
+    public static function crearNota(){
       //if(!isset($_SESSION)) session_start();
 
       if (isset($_POST["submit"])) {
@@ -56,21 +56,17 @@ class NotaController extends BaseController{
           NotaMapper::guardarNota($nota);
 
           ViewManager::getInstance()->redirect("nota", "index");
+        }else{
+            throw new Exception("Nota no valida");
         }
+      }else{
+        ViewManager::getInstance()->render("notas", "crearNota");
       }
-
-      // Put the Post object visible to the view
-      //ViewManager::getInstance()->setVariable("nota", $nota);
-
-      // render the view (/view/posts/add.php)
-      ViewManager::getInstance()->render("notas", "crearNota");
-
       } //FIN CREAR nota
 
 
     /* GET nota*/
-  public static function getNota($idNota,$idUsuario){
-
+   public static function getNota($idNota,$idUsuario){
 
       if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
 
@@ -83,18 +79,13 @@ class NotaController extends BaseController{
 
           if ($nota == NULL){
             throw new Exception("No existe la nota");
-            /*
-           $error = "No existe la nota ";
-            header("Location: ../views/error.php?error=$error");*/
+
           }else{
             return $nota;
           }
     }else{
 
       throw new Exception("No puedes ver esta nota");
-/*
-      $error = "No puedes ver esta nota ".$idNota." y usuario: ".$idUsuario."";
-        header("Location: ../views/error.php?error=$error");*/
 
     }
 
@@ -103,7 +94,7 @@ class NotaController extends BaseController{
 
     /*MODIFICAR NOTA*/
   public function modificarNota(){
-        //  if(!isset($_SESSION)) session_start();
+
       if (isset($_POST["submit"])) {
           $idNota = $_POST["idNot"];
           $idUsuario =  $_POST["idusu"];
@@ -139,6 +130,9 @@ class NotaController extends BaseController{
                   //Llamamos a la funcion que modifica la Nota
                   $nota = NotaMapper::update($idNota, $nombre,$contenido);
                   ViewManager::getInstance()->render("users", "index");
+                }else{
+
+                    throw new Exception("Nota no valida");
                 }
             }else{
                 throw new Exception("No puedes modificar esta nota");
@@ -147,49 +141,23 @@ class NotaController extends BaseController{
             ViewManager::getInstance()->render("users", "editarNota");
       }
 
-/*
 
-        public static function borrarNota(){
+
+      public static function deleteNota(){
           if(!isset($_SESSION)) session_start();
 
-            $idNota = $_POST['idNot'];
-            $idUsuario = $_POST['idusu'];
+          $idUsuario = $_POST['idusu'];
+          $idNota = $_POST['idNot'];
 
-          if(Nota::comprobarNota_Usuario($idNota,$idUsuario)){
-
-              //Comprobamos si existe la  nota para poder borrarla
-            /*  if(NotaMapper::existeIdNota($idNota)){
-
-                $error = "Entraaa ";
-                 header("Location: ../views/error.php?error=$error");*/
-                //Nota::delete($idNota);
-                //Redireccionamos a vista
-              /*  header("Location: ../views/verNotas.php");
-            }  */
-        /*    }else{
-                $error = "No puedes eliminar esta nota";
-                header("Location: ../views/error.php?error=$error");
-
-            }
-
-        }*/
-
-            public static function deleteNota(){
-              if(!isset($_SESSION)) session_start();
-
-              $idUsuario = $_POST['idusu'];
-              $idNota = $_POST['idNot'];
-
-                if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
-                    $idNota = $_POST['idNot'];
-                    NotaMapper::delete($idNota);
-                      //Redireccionamos a vista
-                      ViewManager::getInstance()->render("users", "index");
-                }else{
-                  	throw new Exception("No puedes eliminar esta nota");
-                  }
+            if(NotaMapper::notaByUsuario($idNota,$idUsuario)){
+                $idNota = $_POST['idNot'];
+                NotaMapper::delete($idNota);
+                  //Redireccionamos a vista
+                  ViewManager::getInstance()->render("users", "index");
+            }else{
+              	throw new Exception("No puedes eliminar esta nota");
               }
-
+          }
 
 }
 

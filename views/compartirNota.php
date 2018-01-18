@@ -59,12 +59,9 @@ $idUsuario = $view->getVariable("currentusername");
                   <?php
                foreach ($row as $notaCompartida) {
              ?>
-
-
              <tr>
-                <td><?php echo $notaCompartida->getEmail() ?></td>
+                <td><?php echo $notaCompartida->getEmail(); ?></td>
                 <td><a href=""><button type="submit" class="btn btn-default" name="email" form="borrar" ><span class="glyphicon glyphicon-trash" id="btnEliminar"></span><?= i18n("Eliminar")?></button></a>
-
               </tr>
 
 
@@ -73,9 +70,8 @@ $idUsuario = $view->getVariable("currentusername");
              }
              ?>
              <form method= "post" action = "index.php?controller=notaCompartida&action=borrarUsuCompartido" id="borrar">
-                 <input type="hidden"  name="email" value ="<?php echo $notaCompartida->getEmail() ?>">
-
-                    <input type="hidden"  name="idc" value ="<?php echo $idNotaC ?>">
+                <input type="hidden"  name="email" value ="<?php echo $notaCompartida->getEmail() ?>">
+                <input type="hidden"  name="idc" value ="<?php echo $idNotaC ?>">
              </form>
 
            </tbody>
